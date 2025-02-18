@@ -1,8 +1,8 @@
 version "4.2"
 
-#include "zscript/astralcaco.txt"
-#include "zscript/annihilator.txt"
-#include "zscript/nightmaredemon.txt"
-//#include "zscript/formercaptain.txt"
+#include "zscript/bogus/eviternity-mobs/monsters/astralcaco.zs"
+#include "zscript/bogus/eviternity-mobs/monsters/annihilator.zs"
+#include "zscript/bogus/eviternity-mobs/monsters/nightmaredemon.zs"
+//#include "zscript/bogus/eviternity-mobs/monsters/formercaptain.zs"
 
-#include "zscript/spawnhandler.txt"
+#include "zscript/bogus/eviternity-mobs/handlers/spawnhandler.zs"
