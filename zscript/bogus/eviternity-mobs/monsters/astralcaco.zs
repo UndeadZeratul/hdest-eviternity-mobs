@@ -52,10 +52,10 @@ class Bogus_AstralCacodemon : HDMobBase
 	{
 		super.beginplay();
 		
-		hdmobai.resize(self,0.9,1.3);
-		speed*=3.-2*scale.x;
-		let hdmb=hdmobster(hdmobster.spawnmobster(self));
-		hdmb.meleethreshold=0;
+		Resize(0.9, 1.3);
+
+		speed *= 3. - 2 * scale.x;
+		meleethreshold = 0;
 		chargemode = 0;
 	}
 	
@@ -64,17 +64,16 @@ class Bogus_AstralCacodemon : HDMobBase
 		spawn:
 			ACAC A 10
 			{
-				A_Look();
+				A_HDLook();
 				
-				if (!bambush && !random(0, 10))
-					hdmobai.wander(self, true);
+				if (!bambush && !random(0, 10)) A_HDWander();
 			}
 			wait;
 			
 		see:
 			ACAC A 4
 			{
-				hdmobai.chase(self);
+				A_HDChase();
 				chargemode = 0;
 			}
 			loop;

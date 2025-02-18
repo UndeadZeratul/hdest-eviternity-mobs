@@ -29,7 +29,7 @@ actor Bogus_FormerCaptain : HDMobMan replaces Cacodemon
 		see:
 			FCAP ABCD 4
 			{
-				hdmobai.chase(self);
+				A_HDChase();
 			}
 			loop;
 			

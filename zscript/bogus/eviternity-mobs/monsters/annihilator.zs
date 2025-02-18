@@ -43,6 +43,7 @@ class Bogus_Annihilator : PainMonster
 	override void PostBeginPlay()
 	{
 		super.postbeginplay();
+
 		remainingnades = random(8, 12) * 2;
 		bsmallhead = true;
 		angery = false;
@@ -108,12 +109,15 @@ class Bogus_Annihilator : PainMonster
 		A_PlaySound("weapons/bigrifle");
 		HDBulletActor boolet = HDBulletActor.FireBullet(self,"HDB_355", spread: angery ? 10 : 5);
 		boolet.warp(self, radius, -radius * 0.55, (height / 2) + 1, flags: WARPF_NOCHECKPOSITION);
-		A_SpawnItemEx("HDSpent355",
-			-radius * 1.5,radius - 6,(height / 2) + 4,
-			vel.x,vel.y,vel.z + 5,
-			180,SXF_ABSOLUTEMOMENTUM|SXF_NOCHECKPOSITION|SXF_TRANSFERPITCH
-		);
 		
+		HDWeapon.EjectCasing(
+			self,
+			"HDSpent355",
+			frandom(79, 81),
+			(frandom(7, 7.5), 0, 0),
+			(radius - 6, radius * 1.5, 0)
+		);
+
 		remainingburst--;
 		
 		if (remainingburst <= 0)
@@ -147,20 +151,20 @@ class Bogus_Annihilator : PainMonster
 					SetStateLabel("ree");
 				}
 			}
-			ANNI A 8 { hdmobai.chase(self); A_SetTics(angery ? 6 : 8); }
-			ANNI B 8 { hdmobai.chase(self); A_PlaySound("spider/walk"); A_SetTics(angery ? 6 : 8); }
-			ANNI C 8 { hdmobai.chase(self); A_SetTics(angery ? 6 : 8); }
-			ANNI D 8 { hdmobai.chase(self); A_PlaySound("spider/walk"); A_SetTics(angery ? 6 : 8); }
+			ANNI A 8 { A_HDChase(); A_SetTics(angery ? 6 : 8); }
+			ANNI B 8 { A_HDChase(); A_PlaySound("spider/walk"); A_SetTics(angery ? 6 : 8); }
+			ANNI C 8 { A_HDChase(); A_SetTics(angery ? 6 : 8); }
+			ANNI D 8 { A_HDChase(); A_PlaySound("spider/walk"); A_SetTics(angery ? 6 : 8); }
 			TNT1 A 0 A_JumpIfTargetInLOS("see");
 			TNT1 A 0 SetStateLabel("roam");
 			
 		roam:
 			TNT1 A 0 A_AlertMonsters();
 			TNT1 A 0 A_JumpIfTargetInLOS("missile");
-			ANNI A 8 { hdmobai.chase(self); A_SetTics(angery ? 6 : 8); }
-			ANNI B 8 { hdmobai.chase(self); A_PlaySound("spider/walk"); A_SetTics(angery ? 6 : 8); }
-			ANNI C 8 { hdmobai.chase(self); A_SetTics(angery ? 6 : 8); }
-			ANNI D 8 { hdmobai.chase(self); A_PlaySound("spider/walk"); A_SetTics(angery ? 6 : 8); }
+			ANNI A 8 { A_HDChase(); A_SetTics(angery ? 6 : 8); }
+			ANNI B 8 { A_HDChase(); A_PlaySound("spider/walk"); A_SetTics(angery ? 6 : 8); }
+			ANNI C 8 { A_HDChase(); A_SetTics(angery ? 6 : 8); }
+			ANNI D 8 { A_HDChase(); A_PlaySound("spider/walk"); A_SetTics(angery ? 6 : 8); }
 			loop;
 			
 		melee:

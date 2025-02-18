@@ -37,8 +37,9 @@ class Bogus_NightmareDemon : HDMobBase
 	override void PostBeginPlay()
 	{
 		super.PostBeginPlay();
-		HDMobAI.Resize(self, frandom(0.9, 1.1));
-		let hdmb = hdmobster(hdmobster.spawnmobster(self));
+
+		Resize(0.9, 1.1);
+
 		cloaked = false;
 		cloakfuzzy = false;
 		bbiped = true;
@@ -141,7 +142,7 @@ class Bogus_NightmareDemon : HDMobBase
 		notice:
 			NDEM ABCD 8
 			{
-				hdmobai.chase(self);
+				A_HDChase();
 				if (!random(0, 3) && CheckIfCloser(target, radius + 512)
 					&& A_JumpIfTargetInLOS("lunge"))
 				{
@@ -154,7 +155,7 @@ class Bogus_NightmareDemon : HDMobBase
 		chase:
 			NDEM ABCD 4
 			{
-				hdmobai.chase(self);
+				A_HDChase();
 				if (!random(0, 3) && CheckIfCloser(target, radius + 256)
 					&& A_JumpIfTargetInLOS("lunge"))
 				{
@@ -182,7 +183,7 @@ class Bogus_NightmareDemon : HDMobBase
 		lunge:
 			NDEM ABCD 4
 			{
-				hdmobai.chase(self);
+				A_HDChase();
 				if (!A_JumpIfTargetInLOS("lunge"))
 				{
 					SetStateLabel("see");
