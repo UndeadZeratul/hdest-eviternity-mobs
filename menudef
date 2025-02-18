@@ -1,0 +1,51 @@
+AddOptionMenu "OptionsMenu"
+{
+	StaticText " "
+	Submenu "Eviternity Monsters Options", "emonstersoptions"
+}
+
+OptionMenu "emonstersoptions"
+{
+	Title "Eviternity Monsters Options"
+	StaticText "All changes take place when entering a map", yellow
+	StaticText " "
+	
+	Option "Spawn Mode", "emonsters_masterspawnmode", "emon_mastermodes"
+	StaticText "What types of monsters should be replaced?"
+	StaticText " "
+	
+	StaticText "Astral Cacodemon", yellow
+	StaticText "Can replace cacodemon", grey
+	Slider "Spawn rate", "emonsters_acacospawnrate", 0, 100, 1, 0
+	Option "Eviternity replace mode", "emonsters_acacoalways", "emon_alwaysmodes"
+	StaticText " "
+	
+	StaticText "Annihilator", yellow
+	StaticText "Can replace Baron of Hell", grey
+	Slider "Spawn rate", "emonsters_annispawnrate", 0, 100, 1, 0
+	Option "Eviternity replace mode", "emonsters_annialways", "emon_alwaysmodes"
+	StaticText " "
+	
+	StaticText "Nightmare Demon", yellow
+	StaticText "This one kinda sucks", yellow
+	StaticText "Can replace invisible babuin", gray
+	Slider "Spawn rate", "emonsters_ndemspawnrate", 0, 100, 1, 0
+	Option "Eviternity replace mode", "emonsters_ndemalways", "emon_alwaysmodes"
+	StaticText " "
+}
+
+OptionValue "emon_mastermodes"
+{
+	0, "Doom monsters"
+	1, "Eviternity monsters"
+	2, "Both"
+}
+
+OptionValue "emon_alwaysmodes"
+{
+	// why is this even an option?
+	// 0, "Based on rate"
+	
+	1, "Always replace"
+	2, "Never replace"
+}

@@ -1,0 +1,10 @@
+server int emonsters_masterspawnmode = 0;
+
+server int emonsters_acacospawnrate = 5;
+server int emonsters_acacoalways = 1;
+
+server int emonsters_annispawnrate = 5;
+server int emonsters_annialways = 1;
+
+server int emonsters_ndemspawnrate = 5;
+server int emonsters_ndemalways = 1;
