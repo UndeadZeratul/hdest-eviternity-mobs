@@ -4,6 +4,10 @@ AddOptionMenu "OptionsMenu"
 	Submenu "Eviternity Monsters Options", "emonstersoptions"
 }
 
+AddOptionMenu "HDAddonMenu" {
+	Submenu "Eviternity Monsters Options", "emonstersoptions"
+}
+
 OptionMenu "emonstersoptions"
 {
 	Title "Eviternity Monsters Options"
