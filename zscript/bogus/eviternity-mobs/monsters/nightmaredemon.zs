@@ -70,8 +70,8 @@ class Bogus_NightmareDemon : HDMobBase
 		{
 			A_SetRenderStyle(1, STYLE_Normal);
 		}
-		
-		if (hdmobbase(self).shields < 240 && !angery)
+		let shields = hdmagicshield(self.findinventory("hdmagicshield"));
+		if (shields.amount < 240 && !angery)
 		{
 			angery = true;
 			SetStateLabel("see");
@@ -99,7 +99,8 @@ class Bogus_NightmareDemon : HDMobBase
 		spawn:
 			NDEM A 0 nodelay
 			{
-				hdmobbase(self).shields = 240;
+				let shields = hdmagicshield(self.findinventory("hdmagicshield"));
+				shields.amount = 240;
 				cloaked = true;
 			}
 			

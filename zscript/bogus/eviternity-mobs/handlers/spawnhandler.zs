@@ -123,12 +123,12 @@ class EMonSpawnHandler : EventHandler
 	{
 		if (e.thing)
 		{
-			if(replacething(e.thing, "Bogus_AstralCacodemon", "Trilobite", "AstralCaco",
+			if(replacething(e.thing, "Bogus_AstralCacodemon", "FlyZapper", "AstralCaco",
 				astralcacorate, spawnmode, astralcacoalways))
 			{
 			
 			}
-			else if(replacething(e.thing, "Bogus_Annihilator", "PainLord", "Annihilator",
+			else if(replacething(e.thing, "Bogus_Annihilator", "Baron", "Annihilator",
 				annihilatorrate, spawnmode, annihilatoralways))
 			{
 			

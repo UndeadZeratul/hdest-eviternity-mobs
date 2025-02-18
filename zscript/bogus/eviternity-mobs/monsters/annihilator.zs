@@ -140,7 +140,8 @@ class Bogus_Annihilator : PainMonster
 			TNT1 A 0 A_AlertMonsters();
 			TNT1 A 0
 			{
-				if ((hdmobbase(self).shields <= 2000 && !angery)
+				let shields = hdmagicshield(self.findinventory("hdmagicshield"));
+				if ((shields.amount <= 2000 && !angery)
 					|| (health <= 700 && !angery))
 				{
 					SetStateLabel("ree");
@@ -567,7 +568,7 @@ class Bogus_Annihilator : PainMonster
 	}
 }
 
-class PyroGrenade : GyroGrenade
+class PyroGrenade : RocketGrenade
 {
 	default
 	{
