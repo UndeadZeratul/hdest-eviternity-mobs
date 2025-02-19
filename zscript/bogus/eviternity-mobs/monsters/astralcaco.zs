@@ -30,7 +30,7 @@ class Bogus_AstralCacodemon : HDMobBase
 		activesound "astral/active";
 		meleesound "astral/melee";
 		
-		tag "Astral Cacodemon";
+		tag "$TAG_ASTRALCACO";
 		bloodcolor "22 22 22";
 
 		+pushable
@@ -41,8 +41,8 @@ class Bogus_AstralCacodemon : HDMobBase
 		damagefactor "SmallArms1", 0.9;
 		damagefactor "Thermal", 0;
 		damagefactor "Electro", 0;
-		obituary "%o now rests amongst the stars.";
-		hitobituary "%o now rests inside the stars.";
+		obituary "$OB_ASTRALCACO";
+		hitobituary "$OB_HIT_ASTRALCACO";
 		speed 12;
 		maxtargetrange 8192;
 		meleethreshold 128;

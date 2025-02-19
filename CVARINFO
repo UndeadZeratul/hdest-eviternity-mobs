@@ -1,10 +1,18 @@
-server int emonsters_masterspawnmode = 0;
+server int  annihilator_hellknight_spawn_bias        = -1;
+server int  annihilator_baron_spawn_bias             = 19;
+server int  annihilator_annihilator_spawn_bias       = 0;
+server bool annihilator_persistent_spawning          = false;
 
-server int emonsters_acacospawnrate = 5;
-server int emonsters_acacoalways = 1;
+server int  astralcaco_cacodemon_spawn_bias          = 19;
+server int  astralcaco_astralcaco_spawn_bias         = 0;
+server bool astralcaco_persistent_spawning           = false;
 
-server int emonsters_annispawnrate = 5;
-server int emonsters_annialways = 1;
+server int  formercaptain_chaingunguy_spawn_bias     = 19;
+server int  formercaptain_formercaptain_spawn_bias   = 0;
+server bool formercaptain_persistent_spawning        = false;
 
-server int emonsters_ndemspawnrate = 5;
-server int emonsters_ndemalways = 1;
+server int  nightmaredemon_babuin_spawn_bias         = -1;
+server int  nightmaredemon_specbabuin_spawn_bias     = 19;
+server int  nightmaredemon_ninjapirate_spawn_bias    = -1;
+server int  nightmaredemon_nightmaredemon_spawn_bias = 0;
+server bool nightmaredemon_persistent_spawning       = false;

@@ -20,6 +20,7 @@ class Bogus_Annihilator : PainMonster
 		speed 12;
 		+bossdeath
 		+missileevenmore
+		+hdmobbase.smallhead
 		bloodcolor "red";
 		
 		seesound "annihilator/sight";
@@ -27,8 +28,8 @@ class Bogus_Annihilator : PainMonster
 		deathsound "annihilator/death";
 		activesound "annihilator/active";
 		
-		obituary "%o's hearts and minds are now splattered all over the wall.";
-		tag "Annihilator";
+		obituary "$OB_ANNIHILATOR";
+		tag "$TAG_ANNIHILATOR";
 		
 		maxtargetrange 65536;
 		damagefactor "thermal", 0.5;
@@ -45,9 +46,56 @@ class Bogus_Annihilator : PainMonster
 		super.postbeginplay();
 
 		remainingnades = random(8, 12) * 2;
-		bsmallhead = true;
 		angery = false;
 	}
+
+	override void onDead() {
+		mass = 100;
+	}
+
+    override void deathdrop() {
+        if (!bfriendly && !bhasdropped) {
+            bhasdropped = true;
+
+			// Spill remaining Rocquettes
+			for(int i = 0; i < remainingnades / 2; i++)
+			{
+				if (!random(0, 2))
+				{
+					A_SpawnItemEx("HDRocketAmmo",
+						random(-10,10),random(-10,10),random(0,16),
+						random(-3,3),random(-3,3),random(3,6), flags: SXF_NOCHECKPOSITION
+					);
+				}
+				else
+				{
+					A_SpawnItemEx("DudRocket",
+						random(-10,10),random(-10,10),random(0,16),
+						random(-3,3),random(-3,3),random(3,6), flags: SXF_NOCHECKPOSITION
+					);
+				}
+			}
+			
+			// Spill remaining .355 Rounds
+			for (int i = 0; i < 16 * 5; i++)
+			{
+				if (!random(0, 4))
+				{
+					A_SpawnItemEx("HDRevolverAmmo",
+						random(-10,10),random(-10,10),random(0,16),
+						random(-3,3),random(-3,3),0, random(0, 360), SXF_NOCHECKPOSITION
+					);
+				}
+				else
+				{
+					A_SpawnItemEx("HDSpent355",
+						random(-10,10),random(-10,10),random(0,16),
+						random(-3,3),random(-3,3),0, random(0, 360), SXF_NOCHECKPOSITION
+					);
+				}
+			}
+        }
+    }
 	
 	// ================================================================
 	// THESE NEXT TWO FUNCTIONS NABBED FROM HD'S MARINE
@@ -473,6 +521,7 @@ class Bogus_Annihilator : PainMonster
 			ANNI A 0 SetStateLabel("see");
 			
 		death:
+		gib:
 			ANNI J 0 A_Scream();
 			ANNI J 0 spawn("Gyrosploder",self.pos-(0,0,1),ALLOW_REPLACE);
 			ANNI J 8 A_SetTics(random(64, 128));
@@ -487,53 +536,11 @@ class Bogus_Annihilator : PainMonster
 				spawn("Gyrosploder",self.pos-(random(-16, 16),random(-16, 16),random(0, 16)),ALLOW_REPLACE);
 				
 				A_HDBlast(
-				pushradius:256,pushamount:128,fullpushradius:96,
-				fragradius:HDCONST_SPEEDOFSOUND-10*stamina,fragtype:"HDB_fragRL",
-				immolateradius:128,immolateamount:random(3,60),
-				immolatechance:25
+					pushradius:256,pushamount:128,fullpushradius:96,
+					fragradius:HDCONST_SPEEDOFSOUND-10*stamina,fragtype:"HDB_fragRL",
+					immolateradius:128,immolateamount:random(3,60),
+					immolatechance:25
 				);
-			}
-			ANNI M 0
-			{
-				for(int i = 0; i < remainingnades / 2; i++)
-				{
-					if (!random(0, 2))
-					{
-						A_SpawnItemEx("HDRocketAmmo",
-							random(-10,10),random(-10,10),random(0,16),
-							random(-3,3),random(-3,3),random(3,6), flags: SXF_NOCHECKPOSITION
-						);
-					}
-					else
-					{
-						A_SpawnItemEx("DudRocket",
-							random(-10,10),random(-10,10),random(0,16),
-							random(-3,3),random(-3,3),random(3,6), flags: SXF_NOCHECKPOSITION
-						);
-					}
-				}
-				
-				mass = 100;
-			}
-			ANNI MMMMMMMMMMMMMMMM 0 
-			{
-				for (int i = 0; i < 5; i++)
-				{
-					if (!random(0, 4))
-					{
-						A_SpawnItemEx("HDRevolverAmmo",
-							random(-10,10),random(-10,10),random(0,16),
-							random(-3,3),random(-3,3),0, random(0, 360), SXF_NOCHECKPOSITION
-						);
-					}
-					else
-					{
-						A_SpawnItemEx("HDSpent355",
-							random(-10,10),random(-10,10),random(0,16),
-							random(-3,3),random(-3,3),0, random(0, 360), SXF_NOCHECKPOSITION
-						);
-					}
-				}
 			}
 			ANNI NOPQ 4 
 			{
@@ -567,6 +574,7 @@ class Bogus_Annihilator : PainMonster
 			ANNI R 0 SetStateLabel("dead");
 			
 		dead:
+		gibbed:
 			ANNI R -1;
 			stop;
 	}

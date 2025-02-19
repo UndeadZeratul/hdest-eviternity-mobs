@@ -1,4 +1,3 @@
-gameinfo
-{
-	addeventhandlers = "emonspawnhandler"
+gameinfo {
+	addeventhandlers = "EviternitySpawnHandler"
 }

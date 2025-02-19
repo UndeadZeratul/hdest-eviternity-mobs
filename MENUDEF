@@ -1,55 +1,155 @@
-AddOptionMenu "OptionsMenu"
+OptionMenu EviternityMobsMenu
 {
-	StaticText " "
-	Submenu "Eviternity Monsters Options", "emonstersoptions"
+    Title "$EVITERNITY_MOBS_MENU"
+
+    StaticText "$MENU_MONSTERS_TITLE", "Yellow"
+    StaticText ""
+    Submenu "$TAG_ANNIHILATOR", "AnnihilatorSpawns", 0, 1
+    Submenu "$TAG_ASTRALCACO", "AstralCacoSpawns", 0, 1
+    Submenu "$TAG_FORMERCAPTAIN", "FormerCaptainSpawns", 0, 1
+    Submenu "$TAG_NIGHTMAREDEMON", "NightmareDemonSpawns", 0, 1
+    StaticText ""
+
+    StaticText "$MENU_RESETOPTIONS_TITLE", "red"
+    StaticText ""
+    SafeCommand "$EVITERNITY_MOBS_RESETALLOPTIONS", "EviternityMobs_Reset_Cvars"
+}
+
+AddOptionMenu "OptionsMenu" {
+    Submenu "$EVITERNITY_MOBS_MENU", "EviternityMobsMenu"
 }
 
 AddOptionMenu "HDAddonMenu" {
-	Submenu "Eviternity Monsters Options", "emonstersoptions"
+    Submenu "$EVITERNITY_MOBS_MENU", "EviternityMobsMenu"
 }
 
-OptionMenu "emonstersoptions"
+
+OptionMenu AnnihilatorSpawns
 {
-	Title "Eviternity Monsters Options"
-	StaticText "All changes take place when entering a map", yellow
-	StaticText " "
-	
-	Option "Spawn Mode", "emonsters_masterspawnmode", "emon_mastermodes"
-	StaticText "What types of monsters should be replaced?"
-	StaticText " "
-	
-	StaticText "Astral Cacodemon", yellow
-	StaticText "Can replace cacodemon", grey
-	Slider "Spawn rate", "emonsters_acacospawnrate", 0, 100, 1, 0
-	Option "Eviternity replace mode", "emonsters_acacoalways", "emon_alwaysmodes"
-	StaticText " "
-	
-	StaticText "Annihilator", yellow
-	StaticText "Can replace Baron of Hell", grey
-	Slider "Spawn rate", "emonsters_annispawnrate", 0, 100, 1, 0
-	Option "Eviternity replace mode", "emonsters_annialways", "emon_alwaysmodes"
-	StaticText " "
-	
-	StaticText "Nightmare Demon", yellow
-	StaticText "This one kinda sucks", yellow
-	StaticText "Can replace invisible babuin", gray
-	Slider "Spawn rate", "emonsters_ndemspawnrate", 0, 100, 1, 0
-	Option "Eviternity replace mode", "emonsters_ndemalways", "emon_alwaysmodes"
-	StaticText " "
+    Title "$TAG_ANNIHILATOR"
+
+    StaticText "$MENU_NOTICE", "Yellow"
+    StaticText "$MENU_SPAWNRATE_TEXT1", "White"
+    StaticText "$MENU_SPAWNRATE_TEXT2", "White"
+    StaticText ""
+
+    StaticText "$MENU_MONSPAWNOPTIONS", "Yellow"
+    StaticText "$MENU_ANNIHILATOR_HELLKNIGHT_SPAWNTEXT", "White"
+    ScaleSlider "$MENU_SPAWNRATE", "annihilator_hellknight_spawn_bias", -1, 999, 1, "$MENU_REPLACEALL", "$MENU_DISABLED"
+    SafeCommand "$MENU_RESETMONSTER", "resetcvar annihilator_hellknight_spawn_bias"
+    StaticText "$MENU_ANNIHILATOR_BARON_SPAWNTEXT", "White"
+    ScaleSlider "$MENU_SPAWNRATE", "annihilator_baron_spawn_bias", -1, 999, 1, "$MENU_REPLACEALL", "$MENU_DISABLED"
+    SafeCommand "$MENU_RESETMONSTER", "resetcvar annihilator_baron_spawn_bias"
+    StaticText "$MENU_ANNIHILATOR_ANNIHILATOR_SPAWNTEXT", "White"
+    ScaleSlider "$MENU_SPAWNRATE", "annihilator_annihilator_spawn_bias", -1, 0, 1, "$MENU_REPLACEALL", "$MENU_DISABLED"
+    SafeCommand "$MENU_RESETMONSTER", "resetcvar annihilator_annihilator_spawn_bias"
+    StaticText ""
+
+    StaticText "$MENU_PERSISTENCYOPTIONS", "Yellow"
+    StaticText "$MENU_PERSISTENCY_TEXT", "White"
+    Option "$MENU_PERSISTENCY", "annihilator_persistent_spawning", "OnOff"
+    SafeCommand "$MENU_RESETPERSISTENCY", "resetcvar annihilator_persistent_spawning"
+    StaticText ""
+    StaticText ""
+
+    StaticText "$MENU_RESETOPTIONS", "Yellow"
+    SafeCommand "$MENU_RESETALLOPTIONS", "annihilator_reset_cvars"
 }
 
-OptionValue "emon_mastermodes"
+OptionMenu AstralCacoSpawns
 {
-	0, "Doom monsters"
-	1, "Eviternity monsters"
-	2, "Both"
+    Title "$TAG_ASTRALCACO"
+
+    StaticText "$MENU_NOTICE", "Yellow"
+    StaticText "$MENU_SPAWNRATE_TEXT1", "White"
+    StaticText "$MENU_SPAWNRATE_TEXT2", "White"
+    StaticText ""
+
+    StaticText "$MENU_MONSPAWNOPTIONS", "Yellow"
+    StaticText "$MENU_ASTRALCACO_CACODEMON_SPAWNTEXT", "White"
+    ScaleSlider "$MENU_SPAWNRATE", "astralcaco_cacodemon_spawn_bias", -1, 999, 1, "$MENU_REPLACEALL", "$MENU_DISABLED"
+    SafeCommand "$MENU_RESETMONSTER", "resetcvar astralcaco_cacodemon_spawn_bias"
+    StaticText "$MENU_ASTRALCACO_ASTRALCACO_SPAWNTEXT", "White"
+    ScaleSlider "$MENU_SPAWNRATE", "astralcaco_astralcaco_spawn_bias", -1, 0, 1, "$MENU_REPLACEALL", "$MENU_DISABLED"
+    SafeCommand "$MENU_RESETMONSTER", "resetcvar astralcaco_astralcaco_spawn_bias"
+    StaticText ""
+
+    StaticText "$MENU_PERSISTENCYOPTIONS", "Yellow"
+    StaticText "$MENU_PERSISTENCY_TEXT", "White"
+    Option "$MENU_PERSISTENCY", "astralcaco_persistent_spawning", "OnOff"
+    SafeCommand "$MENU_RESETPERSISTENCY", "resetcvar astralcaco_persistent_spawning"
+    StaticText ""
+    StaticText ""
+
+    StaticText "$MENU_RESETOPTIONS", "Yellow"
+    SafeCommand "$MENU_RESETALLOPTIONS", "astralcaco_reset_cvars"
 }
 
-OptionValue "emon_alwaysmodes"
+OptionMenu FormerCaptainSpawns
 {
-	// why is this even an option?
-	// 0, "Based on rate"
-	
-	1, "Always replace"
-	2, "Never replace"
+    Title "$TAG_FORMERCAPTAIN"
+
+    StaticText "$MENU_NOTICE", "Yellow"
+    StaticText "$MENU_SPAWNRATE_TEXT1", "White"
+    StaticText "$MENU_SPAWNRATE_TEXT2", "White"
+    StaticText ""
+
+    StaticText "$MENU_MONSPAWNOPTIONS", "Yellow"
+    StaticText "$MENU_FORMERCAPTAIN_CHAINGUNGUY_SPAWNTEXT", "White"
+    ScaleSlider "$MENU_SPAWNRATE", "formercaptain_chaingunguy_spawn_bias", -1, 999, 1, "$MENU_REPLACEALL", "$MENU_DISABLED"
+    SafeCommand "$MENU_RESETMONSTER", "resetcvar formercaptain_chaingunguy_spawn_bias"
+    StaticText "$MENU_FORMERCAPTAIN_FORMERCAPTAIN_SPAWNTEXT", "White"
+    ScaleSlider "$MENU_SPAWNRATE", "formercaptain_formercaptain_spawn_bias", -1, 0, 1, "$MENU_REPLACEALL", "$MENU_DISABLED"
+    SafeCommand "$MENU_RESETMONSTER", "resetcvar formercaptain_formercaptain_spawn_bias"
+    StaticText ""
+
+    StaticText "$MENU_PERSISTENCYOPTIONS", "Yellow"
+    StaticText "$MENU_PERSISTENCY_TEXT", "White"
+    Option "$MENU_PERSISTENCY", "formercaptain_persistent_spawning", "OnOff"
+    SafeCommand "$MENU_RESETPERSISTENCY", "resetcvar formercaptain_persistent_spawning"
+    StaticText ""
+    StaticText ""
+
+    StaticText "$MENU_RESETOPTIONS", "Yellow"
+    SafeCommand "$MENU_RESETALLOPTIONS", "formercaptain_reset_cvars"
+}
+
+OptionMenu NightmareDemonSpawns
+{
+    Title "$TAG_NIGHTMAREDEMON"
+
+    StaticText "$MENU_NOTICE", "Yellow"
+    StaticText "$MENU_SPAWNRATE_TEXT1", "White"
+    StaticText "$MENU_SPAWNRATE_TEXT2", "White"
+    StaticText ""
+
+    StaticText "$MENU_MONSPAWNOPTIONS", "Yellow"
+    StaticText "$MENU_NIGHTMAREDEMON_BABUIN_SPAWNTEXT", "White"
+    ScaleSlider "$MENU_SPAWNRATE", "nightmaredemon_babuin_spawn_bias", -1, 999, 1, "$MENU_REPLACEALL", "$MENU_DISABLED"
+    SafeCommand "$MENU_RESETMONSTER", "resetcvar nightmaredemon_babuin_spawn_bias"
+    StaticText "$MENU_NIGHTMAREDEMON_SPECBABUIN_SPAWNTEXT", "White"
+    ScaleSlider "$MENU_SPAWNRATE", "nightmaredemon_specbabuin_spawn_bias", -1, 999, 1, "$MENU_REPLACEALL", "$MENU_DISABLED"
+    SafeCommand "$MENU_RESETMONSTER", "resetcvar nightmaredemon_specbabuin_spawn_bias"
+    StaticText "$MENU_NIGHTMAREDEMON_NINJAPIRATE_SPAWNTEXT", "White"
+    ScaleSlider "$MENU_SPAWNRATE", "nightmaredemon_ninjapirate_spawn_bias", -1, 999, 1, "$MENU_REPLACEALL", "$MENU_DISABLED"
+    SafeCommand "$MENU_RESETMONSTER", "resetcvar nightmaredemon_ninjapirate_spawn_bias"
+    StaticText "$MENU_NIGHTMAREDEMON_NIUGHTMAREDEMON_SPAWNTEXT", "White"
+    ScaleSlider "$MENU_SPAWNRATE", "nightmaredemon_nightmaredemon_spawn_bias", -1, 0, 1, "$MENU_REPLACEALL", "$MENU_DISABLED"
+    SafeCommand "$MENU_RESETMONSTER", "resetcvar nightmaredemon_nightmaredemon_spawn_bias"
+    StaticText ""
+
+    StaticText "$MENU_NIGHTMAREDEMON_CYBERGIBS_SPAWNTEXT", "White"
+    ScaleSlider "$MENU_SPAWNRATE", "nightmaredemon_cybergibs_spawn_bias", -1, 999, 1, "$MENU_WITHALL", "$MENU_DISABLED"
+    SafeCommand "$MENU_RESETMONSTER", "resetcvar nightmaredemon_cybergibs_spawn_bias"
+    StaticText ""
+
+    StaticText "$MENU_PERSISTENCYOPTIONS", "Yellow"
+    StaticText "$MENU_PERSISTENCY_TEXT", "White"
+    Option "$MENU_PERSISTENCY", "nightmaredemon_persistent_spawning", "OnOff"
+    SafeCommand "$MENU_RESETPERSISTENCY", "resetcvar nightmaredemon_persistent_spawning"
+    StaticText ""
+    StaticText ""
+
+    StaticText "$MENU_RESETOPTIONS", "Yellow"
+    SafeCommand "$MENU_RESETALLOPTIONS", "nightmaredemon_reset_cvars"
 }

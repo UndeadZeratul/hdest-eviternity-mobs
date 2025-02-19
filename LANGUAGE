@@ -1,0 +1,61 @@
+[en default]
+
+TAG_ANNIHILATOR                              = "Annihilator";
+TAG_ASTRALCACO                               = "Astral Cacodemon";
+TAG_FORMERCAPTAIN                            = "Former Captain";
+TAG_NIGHTMAREDEMON                           = "Nightmare Demon";
+
+OB_ANNIHILATOR                               = "%o's hearts and minds are now splattered all over the wall.";
+OB_ASTRALCACO                                = "%o now rests amongst the stars.";
+OB_FORMERCAPTAIN                             = "";
+OB_NIGHTMAREDEMON                            = "%o's liebens were devoured.";
+
+OB_HIT_ASTRALCACO                            = "%o now rests inside the stars.";
+
+// Options Menu Titles
+EVITERNITY_MOBS_MENU                         = "\c[Teal]Ⓔ\c- Eviternity Monsters";
+MENU_MONSTERS_TITLE                          = "--- Monsters ---";
+MENU_RESETOPTIONS_TITLE                      = "--- Reset Options ---";
+
+// Menu Section Headers
+MENU_SPAWNOPTIONS                            = "Spawn Options";
+MENU_MONSPAWNOPTIONS                         = "Monster Spawn Options";
+MENU_PERSISTENCYOPTIONS                      = "Spawn Persistence Options";
+MENU_RESETOPTIONS                            = "Reset Options";
+MENU_RESETALLOPTIONS                         = "Reset all Options";
+
+// Menu Static Text
+MENU_SPAWNRATE_TEXT1                         = "Setting 'spawn rate' to Replace All will suppress";
+MENU_SPAWNRATE_TEXT2                         = "spawns of that given type.";
+MENU_PERSISTENCY_TEXT                        = "Control whether replacements happen after a mapload:";
+
+// Menu Option Labels
+MENU_NOTICE                                  = "Notice:";
+MENU_SPAWNRATE                               = "Spawn Rate: ";
+MENU_PERSISTENCY                             = "Persistent Spawns: ";
+
+// Menu Option Values
+MENU_ENABLED                                 = "Enabled";
+MENU_DISABLED                                = "Disabled";
+MENU_REPLACEALL                              = "Replace All";
+MENU_WITHALL                                 = "With All";
+
+// Menu Command Text
+MENU_RESETMONSTER                            = "Reset Monster Options";
+MENU_RESETPERSISTENCY                        = "Reset Persistence Options";
+EVITERNITY_MOBS_RESETALLOPTIONS              = "Reset all options for Eviternity Monsters";
+
+MENU_ANNIHILATOR_HELLKNIGHT_SPAWNTEXT        = "Control the rate that Annihilators spawn on Hell Knights:";
+MENU_ANNIHILATOR_BARON_SPAWNTEXT             = "Control the rate that Annihilators spawn on Barons:";
+MENU_ANNIHILATOR_ANNIHILATOR_SPAWNTEXT       = "Control whether Annihilators replace Eviternity Annihilators:";
+
+MENU_ASTRALCACO_CACODEMON_SPAWNTEXT          = "Control the rate that Astral Cacodemons spawn on Cacodemons:";
+MENU_ASTRALCACO_ASTRALCACO_SPAWNTEXT         = "Control whether Astral Cacodemons replace Eviternity Astral Cacodemons:";
+
+MENU_FORMERCAPTAIN_CHAINGUNGUY_SPAWNTEXT     = "Control the rate that Former Captains spawn on Chaingunners:";
+MENU_FORMERCAPTAIN_FORMERCAPTAIN_SPAWNTEXT   = "Control whether Former Captains replace Eviternity Former Captains:";
+
+MENU_NIGHTMAREDEMON_BABUIN_SPAWNTEXT         = "Control the rate that Nightmare Demons spawn on Babuins:";
+MENU_NIGHTMAREDEMON_SPECBABUIN_SPAWNTEXT     = "Control the rate that Nightmare Demons spawn on Cloaked Babuins:";
+MENU_NIGHTMAREDEMON_NINJAPIRATE_SPAWNTEXT    = "Control the rate that Nightmare Demons spawn on Ninja Piraotes:";
+MENU_NIGHTMAREDEMON_NIGHTMAREDEMON_SPAWNTEXT = "Control whether Nightmare Demons replace Eviternity Nightmare Demons:";

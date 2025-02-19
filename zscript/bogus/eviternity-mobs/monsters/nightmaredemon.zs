@@ -26,8 +26,8 @@ class Bogus_NightmareDemon : HDMobBase
 		deathsound "nightmaredemon/death";
 		activesound "nightmaredemon/active";
 		
-		obituary "%o's liebens were devoured.";
-		tag "Nightmare Demon";
+		obituary "$OB_NIGHTMAREDEMON";
+		tag "$TAG_NIGHTMAREDEMON";
 		
 		health 300;
 		hdmobbase.shields 240;
@@ -316,7 +316,7 @@ class Bogus_NightmareDemon : HDMobBase
 			TROO SRQ 6;
 			TROO PO 4;
 			goto checkraise;
-		xdeath:
+		gib:
 			NDEM I 0
 			{
 				cloaked = false;
