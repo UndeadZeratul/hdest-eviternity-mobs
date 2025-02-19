@@ -133,14 +133,9 @@ OptionMenu NightmareDemonSpawns
     StaticText "$MENU_NIGHTMAREDEMON_NINJAPIRATE_SPAWNTEXT", "White"
     ScaleSlider "$MENU_SPAWNRATE", "nightmaredemon_ninjapirate_spawn_bias", -1, 999, 1, "$MENU_REPLACEALL", "$MENU_DISABLED"
     SafeCommand "$MENU_RESETMONSTER", "resetcvar nightmaredemon_ninjapirate_spawn_bias"
-    StaticText "$MENU_NIGHTMAREDEMON_NIUGHTMAREDEMON_SPAWNTEXT", "White"
+    StaticText "$MENU_NIGHTMAREDEMON_NIGHTMAREDEMON_SPAWNTEXT", "White"
     ScaleSlider "$MENU_SPAWNRATE", "nightmaredemon_nightmaredemon_spawn_bias", -1, 0, 1, "$MENU_REPLACEALL", "$MENU_DISABLED"
     SafeCommand "$MENU_RESETMONSTER", "resetcvar nightmaredemon_nightmaredemon_spawn_bias"
-    StaticText ""
-
-    StaticText "$MENU_NIGHTMAREDEMON_CYBERGIBS_SPAWNTEXT", "White"
-    ScaleSlider "$MENU_SPAWNRATE", "nightmaredemon_cybergibs_spawn_bias", -1, 999, 1, "$MENU_WITHALL", "$MENU_DISABLED"
-    SafeCommand "$MENU_RESETMONSTER", "resetcvar nightmaredemon_cybergibs_spawn_bias"
     StaticText ""
 
     StaticText "$MENU_PERSISTENCYOPTIONS", "Yellow"
