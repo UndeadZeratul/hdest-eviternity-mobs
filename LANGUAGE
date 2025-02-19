@@ -57,5 +57,5 @@ MENU_FORMERCAPTAIN_FORMERCAPTAIN_SPAWNTEXT   = "Control whether Former Captains 
 
 MENU_NIGHTMAREDEMON_BABUIN_SPAWNTEXT         = "Control the rate that Nightmare Demons spawn on Babuins:";
 MENU_NIGHTMAREDEMON_SPECBABUIN_SPAWNTEXT     = "Control the rate that Nightmare Demons spawn on Cloaked Babuins:";
-MENU_NIGHTMAREDEMON_NINJAPIRATE_SPAWNTEXT    = "Control the rate that Nightmare Demons spawn on Ninja Piraotes:";
+MENU_NIGHTMAREDEMON_NINJAPIRATE_SPAWNTEXT    = "Control the rate that Nightmare Demons spawn on Ninja Pirates:";
 MENU_NIGHTMAREDEMON_NIGHTMAREDEMON_SPAWNTEXT = "Control whether Nightmare Demons replace Eviternity Nightmare Demons:";
