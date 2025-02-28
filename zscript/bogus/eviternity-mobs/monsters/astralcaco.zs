@@ -290,7 +290,7 @@ class Bogus_AstralCacodemon : HDMobBase
 		raise:
 			ACAC S 8 A_UnSetFloorClip;
 			ACAC SRQPONMLKJ 8;
-			goto checkraise;
+			goto see;
 	}
 }
 

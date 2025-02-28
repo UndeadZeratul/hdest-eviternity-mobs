@@ -298,7 +298,7 @@ class Bogus_NightmareDemon : HDMobBase
 			
 		raise:
 			NDEM NMLKJI 6;
-			goto checkraise;
+			goto see;
 		// the following are taken from HD
 		ungib:
 			TROO U 6{
@@ -315,7 +315,7 @@ class Bogus_NightmareDemon : HDMobBase
 			TROO UT 8;
 			TROO SRQ 6;
 			TROO PO 4;
-			goto checkraise;
+			goto see;
 		gib:
 			NDEM I 0
 			{
