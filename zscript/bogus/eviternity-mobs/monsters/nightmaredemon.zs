@@ -71,8 +71,9 @@ class Bogus_NightmareDemon : HDMobBase
 		{
 			A_SetRenderStyle(1, STYLE_Normal);
 		}
+
 		let shields = hdmagicshield(self.findinventory("hdmagicshield"));
-		if (shields.amount < 240 && !angery)
+		if ((!shields || shields.amount < 240) && !angery)
 		{
 			angery = true;
 			SetStateLabel("see");
