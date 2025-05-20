@@ -35,10 +35,10 @@ OptionMenu AnnihilatorSpawns
 
     StaticText "$MENU_MONSPAWNOPTIONS", "Yellow"
     StaticText "$MENU_ANNIHILATOR_HELLKNIGHT_SPAWNTEXT", "White"
-    ScaleSlider "$MENU_SPAWNRATE", "annihilator_hellknight_spawn_bias", -1, 999, 1, "$MENU_REPLACEALL", "$MENU_DISABLED"
+    Slider "$MENU_SPAWNRATE", "annihilator_hellknight_spawn_bias",  0.0, 1000, .01, 3
     SafeCommand "$MENU_RESETMONSTER", "resetcvar annihilator_hellknight_spawn_bias"
     StaticText "$MENU_ANNIHILATOR_BARON_SPAWNTEXT", "White"
-    ScaleSlider "$MENU_SPAWNRATE", "annihilator_baron_spawn_bias", -1, 999, 1, "$MENU_REPLACEALL", "$MENU_DISABLED"
+    Slider "$MENU_SPAWNRATE", "annihilator_baron_spawn_bias",  0.0, 1000, .01, 3
     SafeCommand "$MENU_RESETMONSTER", "resetcvar annihilator_baron_spawn_bias"
     StaticText "$MENU_ANNIHILATOR_ANNIHILATOR_SPAWNTEXT", "White"
     ScaleSlider "$MENU_SPAWNRATE", "annihilator_annihilator_spawn_bias", -1, 0, 1, "$MENU_REPLACEALL", "$MENU_DISABLED"
@@ -67,7 +67,7 @@ OptionMenu AstralCacoSpawns
 
     StaticText "$MENU_MONSPAWNOPTIONS", "Yellow"
     StaticText "$MENU_ASTRALCACO_CACODEMON_SPAWNTEXT", "White"
-    ScaleSlider "$MENU_SPAWNRATE", "astralcaco_cacodemon_spawn_bias", -1, 999, 1, "$MENU_REPLACEALL", "$MENU_DISABLED"
+    Slider "$MENU_SPAWNRATE", "astralcaco_cacodemon_spawn_bias",  0.0, 1000, .01, 3
     SafeCommand "$MENU_RESETMONSTER", "resetcvar astralcaco_cacodemon_spawn_bias"
     StaticText "$MENU_ASTRALCACO_ASTRALCACO_SPAWNTEXT", "White"
     ScaleSlider "$MENU_SPAWNRATE", "astralcaco_astralcaco_spawn_bias", -1, 0, 1, "$MENU_REPLACEALL", "$MENU_DISABLED"
@@ -96,7 +96,7 @@ OptionMenu FormerCaptainSpawns
 
     StaticText "$MENU_MONSPAWNOPTIONS", "Yellow"
     StaticText "$MENU_FORMERCAPTAIN_CHAINGUNGUY_SPAWNTEXT", "White"
-    ScaleSlider "$MENU_SPAWNRATE", "formercaptain_chaingunguy_spawn_bias", -1, 999, 1, "$MENU_REPLACEALL", "$MENU_DISABLED"
+    Slider "$MENU_SPAWNRATE", "formercaptain_chaingunguy_spawn_bias",  0.0, 1000, .01, 3
     SafeCommand "$MENU_RESETMONSTER", "resetcvar formercaptain_chaingunguy_spawn_bias"
     StaticText "$MENU_FORMERCAPTAIN_FORMERCAPTAIN_SPAWNTEXT", "White"
     ScaleSlider "$MENU_SPAWNRATE", "formercaptain_formercaptain_spawn_bias", -1, 0, 1, "$MENU_REPLACEALL", "$MENU_DISABLED"
@@ -125,13 +125,13 @@ OptionMenu NightmareDemonSpawns
 
     StaticText "$MENU_MONSPAWNOPTIONS", "Yellow"
     StaticText "$MENU_NIGHTMAREDEMON_BABUIN_SPAWNTEXT", "White"
-    ScaleSlider "$MENU_SPAWNRATE", "nightmaredemon_babuin_spawn_bias", -1, 999, 1, "$MENU_REPLACEALL", "$MENU_DISABLED"
+    Slider "$MENU_SPAWNRATE", "nightmaredemon_babuin_spawn_bias",  0.0, 1000, .01, 3
     SafeCommand "$MENU_RESETMONSTER", "resetcvar nightmaredemon_babuin_spawn_bias"
     StaticText "$MENU_NIGHTMAREDEMON_SPECBABUIN_SPAWNTEXT", "White"
-    ScaleSlider "$MENU_SPAWNRATE", "nightmaredemon_specbabuin_spawn_bias", -1, 999, 1, "$MENU_REPLACEALL", "$MENU_DISABLED"
+    Slider "$MENU_SPAWNRATE", "nightmaredemon_specbabuin_spawn_bias",  0.0, 1000, .01, 3
     SafeCommand "$MENU_RESETMONSTER", "resetcvar nightmaredemon_specbabuin_spawn_bias"
     StaticText "$MENU_NIGHTMAREDEMON_NINJAPIRATE_SPAWNTEXT", "White"
-    ScaleSlider "$MENU_SPAWNRATE", "nightmaredemon_ninjapirate_spawn_bias", -1, 999, 1, "$MENU_REPLACEALL", "$MENU_DISABLED"
+    Slider "$MENU_SPAWNRATE", "nightmaredemon_ninjapirate_spawn_bias",  0.0, 1000, .01, 3
     SafeCommand "$MENU_RESETMONSTER", "resetcvar nightmaredemon_ninjapirate_spawn_bias"
     StaticText "$MENU_NIGHTMAREDEMON_NIGHTMAREDEMON_SPAWNTEXT", "White"
     ScaleSlider "$MENU_SPAWNRATE", "nightmaredemon_nightmaredemon_spawn_bias", -1, 0, 1, "$MENU_REPLACEALL", "$MENU_DISABLED"
