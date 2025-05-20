@@ -1,18 +1,18 @@
-server int  annihilator_hellknight_spawn_bias        = -1;
-server int  annihilator_baron_spawn_bias             = 19;
-server int  annihilator_annihilator_spawn_bias       = 0;
-server bool annihilator_persistent_spawning          = false;
+server float annihilator_hellknight_spawn_bias        = 0.0;
+server float annihilator_baron_spawn_bias             = 0.05;
+server float annihilator_annihilator_spawn_bias       = -1.0;
+server bool  annihilator_persistent_spawning          = false;
 
-server int  astralcaco_cacodemon_spawn_bias          = 19;
-server int  astralcaco_astralcaco_spawn_bias         = 0;
-server bool astralcaco_persistent_spawning           = false;
+server float astralcaco_cacodemon_spawn_bias          = 0.05;
+server float astralcaco_astralcaco_spawn_bias         = -1.0;
+server bool  astralcaco_persistent_spawning           = false;
 
-server int  formercaptain_chaingunguy_spawn_bias     = 19;
-server int  formercaptain_formercaptain_spawn_bias   = 0;
-server bool formercaptain_persistent_spawning        = false;
+server float formercaptain_chaingunguy_spawn_bias     = 0.5;
+server float formercaptain_formercaptain_spawn_bias   = -1.0;
+server bool  formercaptain_persistent_spawning        = false;
 
-server int  nightmaredemon_babuin_spawn_bias         = -1;
-server int  nightmaredemon_specbabuin_spawn_bias     = 19;
-server int  nightmaredemon_ninjapirate_spawn_bias    = -1;
-server int  nightmaredemon_nightmaredemon_spawn_bias = 0;
-server bool nightmaredemon_persistent_spawning       = false;
+server float nightmaredemon_babuin_spawn_bias         = 0.0;
+server float nightmaredemon_specbabuin_spawn_bias     = 1.3;
+server float nightmaredemon_ninjapirate_spawn_bias    = 0.0;
+server float nightmaredemon_nightmaredemon_spawn_bias = -1.0;
+server bool  nightmaredemon_persistent_spawning       = false;
