@@ -1,0 +1,25 @@
+// Annihilator Spawn Entries
+addSpawnTableSingleEntry => { "tableName": "HellKnightReplaces", "name": "Bogus_Annihilator", "weight": "#annihilator_hellknight_spawn_bias", "persists": "#annihilator_persistent_spawning" }
+addSpawnTableSingleEntry => { "tableName": "BaronOfHellReplaces", "name": "Bogus_Annihilator", "weight": "#annihilator_baron_spawn_bias", "persists": "#annihilator_persistent_spawning" }
+
+newSpawnTable => { "spawnName": "Annihilator", "tableName": "AnnihilatorReplaces" }
+addSpawnTableSingleEntry => { "tableName": "AnnihilatorReplaces", "name": "Bogus_Annihilator", "weight": "#annihilator_annihilator_spawn_bias", "persists": "#annihilator_persistent_spawning" }
+
+// Astral Cacodemon Spawn Entries
+addSpawnTableSingleEntry => { "tableName": "CacodemonReplaces", "name": "Bogus_AstralCacodemon", "weight": "#astralcaco_cacodemon_spawn_bias", "persists": "#astralcaco_persistent_spawning" }
+
+newSpawnTable => { "spawnName": "AstralCaco", "tableName": "AstralCacoReplaces" }
+addSpawnTableSingleEntry => { "tableName": "AstralCacoReplaces", "name": "Bogus_AstralCacodemon", "weight": "#astralcaco_astralcaco_spawn_bias", "persists": "#astralcaco_persistent_spawning" }
+
+// Former Captain Spawn Entries
+addSpawnTableSingleEntry => { "tableName": "ChaingunGuyReplaces", "name": "Bogus_FormerCaptain", "weight": "#formercaptain_chaingunguy_spawn_bias", "persists": "#formercaptain_persistent_spawning" }
+
+newSpawnTable => { "spawnName": "FormerCaptain", "tableName": "FormerCaptainReplaces" }
+addSpawnTableSingleEntry => { "tableName": "FormerCaptainReplaces", "name": "Bogus_FormerCaptain", "weight": "#formercaptain_formercaptain_spawn_bias", "persists": "#formercaptain_persistent_spawning" }
+
+// Nightmare Demon Spawn Entries
+addSpawnTableSingleEntry => { "tableName": "DemonReplaces", "name": "Bogus_NightmareDemon", "weight": "#nightmaredemon_babuin_spawn_bias", "persists": "#nightmaredemon_persistent_spawning" }
+addSpawnTableSingleEntry => { "tableName": "SpectreReplaces", "name": "Bogus_NightmareDemon", "weight": "#nightmaredemon_specbabuin_spawn_bias", "persists": "#nightmaredemon_persistent_spawning" }
+
+newSpawnTable => { "spawnName": "NightmareDemon", "tableName": "NightmareDemonReplaces" }
+addSpawnTableSingleEntry => { "tableName": "NightmareDemonReplaces", "name": "Bogus_NightmareDemon", "weight": "#nightmaredemon_nightmaredemon_spawn_bias", "persists": "#nightmaredemon_persistent_spawning" }
