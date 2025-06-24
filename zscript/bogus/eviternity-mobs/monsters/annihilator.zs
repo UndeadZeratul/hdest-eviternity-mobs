@@ -54,8 +54,7 @@ class Bogus_Annihilator : PainMonster
 	}
 
     override void deathdrop() {
-        if (!bfriendly && !bhasdropped) {
-            bhasdropped = true;
+        if (!bFRIENDLY && !bHASDROPPED) {
 
 			// Spill remaining Rocquettes
 			for(int i = 0; i < remainingnades / 2; i++)
