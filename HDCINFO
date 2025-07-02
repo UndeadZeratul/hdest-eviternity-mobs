@@ -23,3 +23,15 @@ addSpawnTableSingleEntry => { "tableName": "SpectreReplaces", "name": "Bogus_Nig
 
 newSpawnTable => { "spawnName": "NightmareDemon", "tableName": "NightmareDemonReplaces" }
 addSpawnTableSingleEntry => { "tableName": "NightmareDemonReplaces", "name": "Bogus_NightmareDemon", "weight": "#nightmaredemon_nightmaredemon_spawn_bias", "persists": "#nightmaredemon_persistent_spawning" }
+
+
+// Bounty Targets
+newMerchantBountyTarget => { "name": "Bogus_FormerCaptain", "value": "350" }
+newMerchantBountyTarget => { "name": "Bogus_NightmareDemon", "value": "400" }
+newMerchantBountyTarget => { "name": "Bogus_AstralCacodemon", "value": "700" }
+newMerchantBountyTarget => { "name": "Bogus_Annihilator", "value": "1000" }
+
+
+// UaS Flashlight Support
+addFlashlightHumanClass => { "name": "Bogus_FormerCaptain" }
+addFlashlightOtherClass => { "name": "Bogus_Annihilator" }
