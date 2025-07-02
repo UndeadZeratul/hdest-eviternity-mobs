@@ -377,7 +377,7 @@ class Bogus_Annihilator : PainMonster
 				{
 					doitagain--;
 					
-					if (remainingnades > 0)
+					if (target && remainingnades > 0)
 					{
 						aimtime = int(Distance2D(target));
 						if (aimtime < 1024)
