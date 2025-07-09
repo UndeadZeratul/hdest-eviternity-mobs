@@ -19,7 +19,7 @@ class Bogus_Annihilator : PainMonster
 		mass 2000;
 		speed 12;
 		+bossdeath
-		+missileevenmore
+		+nobouncesound
 		+hdmobbase.smallhead
 		bloodcolor "red";
 		
@@ -592,15 +592,23 @@ class PyroGrenade : RocketGrenade
 		bmissile=false;
 
 		//bounce
-		if(!primed&&random(0,20)){
-			if(speed>50)painsound="misc/punch";else painsound="misc/fragknock";
-			actor a=spawn("IdleDummy",pos,ALLOW_REPLACE);
-			a.stamina=10;a.A_StartSound(painsound,CHAN_AUTO);
-			[bmissileevenmore,a]=A_SpawnItemEx("DudRocket",0,0,0,
-				random(30,60),random(-10,10),random(-10,10),
-				random(0,360),SXF_NOCHECKPOSITION|SXF_TRANSFERPOINTERS,0
+		if (!primed && random(0, 20)) {
+			painsound = (speed > 50) ? "misc/punch" : "misc/fragknock";
+
+			actor a = spawn("IdleDummy", pos, ALLOW_REPLACE);
+			a.stamina = 10;
+			a.A_StartSound(painsound,CHAN_AUTO);
+
+			[bnobouncesound, a] = A_SpawnItemEx(
+				"DudRocket",
+				0, 0, 0,
+				random(30, 60), random(-10, 10), random(-10, 10),
+				random(0, 360),
+				SXF_NOCHECKPOSITION|SXF_TRANSFERPOINTERS,
+				0
 			);
-			dudrocket(a).isrocket=isrocket;
+
+			dudrocket(a).isrocket = isrocket;
 			return;
 		}
 
