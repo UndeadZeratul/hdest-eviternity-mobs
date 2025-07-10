@@ -272,7 +272,7 @@ class Bogus_AstralCacodemon : HDMobBase
 				bfloatbob = false;
 				bnogravity = false;
 				bfloat = false;
-				A_PlaySound(seesound, CHAN_VOICE);
+				A_Vocalize(seesound);
 			}
 			ACAC KLM 2;
 			ACAC N 2 A_JumpIf(vel.z >= 0, "deadsplatting");
@@ -382,11 +382,11 @@ class OrbCharge : HDActor
 					}
 				}
 			}
-			---- A 0 A_PlaySound("astralorb/charge", CHAN_BODY, attenuation: 1);
+			---- A 0 A_StartSound("astralorb/charge", attenuation: 1);
 			loop;
 			
 		death:
-			BAL2 CDE 3 A_PlaySound("misc/fwoosh", CHAN_BODY);
+			BAL2 CDE 3 A_StartSound("misc/fwoosh");
 			stop;
 			
 		lol:
@@ -394,7 +394,7 @@ class OrbCharge : HDActor
 			{
 				scale = (1, 1);
 				alpha = 5 * chargelevel; //make bloom go crazy
-				A_PlaySound("astralorb/kaboom", volume: 2.0, attenuation: 0.5 - (chargelevel / 10));
+				A_StartSound("astralorb/kaboom", attenuation: 0.5 - (chargelevel / 10));
 				letsdothis = false;
 			}
 			ASBL ABCDEF 3;
@@ -535,7 +535,7 @@ class AstralNormalBall:HDFireball{
 	}
 	void ZapSomething(){
 		roll=frandom(0,360);
-		A_PlaySound("misc/arczap",CHAN_BODY);
+		A_StartSound("misc/arczap");
 		blockthingsiterator it=blockthingsiterator.create(self,72);
 		actor tb=target;
 		actor zit=null;
@@ -575,7 +575,7 @@ class AstralNormalBall:HDFireball{
 		loop;
 	death:
 		BAL2 C 0 A_SprayDecal("CacoScorch",radius*2);
-		BAL2 C 0 A_PlaySound("misc/fwoosh",5);
+		BAL2 C 0 A_StartSound("misc/fwoosh", CHAN_AUTO);
 		BAL2 CCCDDDEEE 1 light("BAKAPOST1") ZapSomething();
 	death2:
 		BAL2 E 0 ZapSomething();

@@ -153,7 +153,7 @@ class Bogus_Annihilator : PainMonster
 	
 	void A_AnnihilatorMinigun()
 	{
-		A_PlaySound("weapons/bigrifle");
+		A_StartSound("weapons/bigrifle");
 		HDBulletActor boolet = HDBulletActor.FireBullet(self,"HDB_355", spread: angery ? 10 : 5);
 		boolet.warp(self, radius, -radius * 0.55, (height / 2) + 1, flags: WARPF_NOCHECKPOSITION);
 		
@@ -185,7 +185,7 @@ class Bogus_Annihilator : PainMonster
 			ANNI DD 8 A_Look();
 			ANNI D 1 A_SetTics(random(1, 16));
 			TNT1 A 0 A_Jump(216, "spawn");
-			TNT1 A 0 A_PlaySound("baron/active");
+			TNT1 A 0 A_StartSound("baron/active");
 			
 		see:
 			TNT1 A 0 A_AlertMonsters();
@@ -199,9 +199,9 @@ class Bogus_Annihilator : PainMonster
 				}
 			}
 			ANNI A 8 { A_HDChase(); A_SetTics(angery ? 6 : 8); }
-			ANNI B 8 { A_HDChase(); A_PlaySound("spider/walk"); A_SetTics(angery ? 6 : 8); }
+			ANNI B 8 { A_HDChase(); A_StartSound("spider/walk"); A_SetTics(angery ? 6 : 8); }
 			ANNI C 8 { A_HDChase(); A_SetTics(angery ? 6 : 8); }
-			ANNI D 8 { A_HDChase(); A_PlaySound("spider/walk"); A_SetTics(angery ? 6 : 8); }
+			ANNI D 8 { A_HDChase(); A_StartSound("spider/walk"); A_SetTics(angery ? 6 : 8); }
 			TNT1 A 0 A_JumpIfTargetInLOS("see");
 			TNT1 A 0 SetStateLabel("roam");
 			
@@ -209,9 +209,9 @@ class Bogus_Annihilator : PainMonster
 			TNT1 A 0 A_AlertMonsters();
 			TNT1 A 0 A_JumpIfTargetInLOS("missile");
 			ANNI A 8 { A_HDChase(); A_SetTics(angery ? 6 : 8); }
-			ANNI B 8 { A_HDChase(); A_PlaySound("spider/walk"); A_SetTics(angery ? 6 : 8); }
+			ANNI B 8 { A_HDChase(); A_StartSound("spider/walk"); A_SetTics(angery ? 6 : 8); }
 			ANNI C 8 { A_HDChase(); A_SetTics(angery ? 6 : 8); }
-			ANNI D 8 { A_HDChase(); A_PlaySound("spider/walk"); A_SetTics(angery ? 6 : 8); }
+			ANNI D 8 { A_HDChase(); A_StartSound("spider/walk"); A_SetTics(angery ? 6 : 8); }
 			loop;
 			
 		melee:
@@ -224,7 +224,7 @@ class Bogus_Annihilator : PainMonster
 			}
 			ANNI B 8 
 			{ 
-				A_PlaySound("spider/walk");
+				A_StartSound("spider/walk");
 				A_FaceTarget(60);
 				if (A_JumpIfTargetInLOS("shoot", 10))
 					SetStateLabel("shoot");
@@ -237,7 +237,7 @@ class Bogus_Annihilator : PainMonster
 			}
 			ANNI D 8 
 			{ 
-				A_PlaySound("spider/walk");
+				A_StartSound("spider/walk");
 				A_FaceTarget(60);
 				if (A_JumpIfTargetInLOS("shoot", 10))
 					SetStateLabel("shoot");

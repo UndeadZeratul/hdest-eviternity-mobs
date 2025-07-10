@@ -93,7 +93,7 @@ class Bogus_NightmareDemon : HDMobBase
 		A_SpawnItemEx("HDSmoke",random(-1,1),random(-1,1),random(4,24),vel.x,vel.y,vel.z+random(1,3),0,SXF_ABSOLUTEMOMENTUM|SXF_NOCHECKPOSITION,0);
 		A_SpawnItemEx("HDSmoke",random(-1,1),random(-1,1),random(4,24),vel.x,vel.y,vel.z+random(1,3),0,SXF_ABSOLUTEMOMENTUM|SXF_NOCHECKPOSITION,0);
 		A_SpawnItemEx("HDSmoke",random(-1,1),random(-1,1),random(4,24),vel.x,vel.y,vel.z+random(1,3),0,SXF_ABSOLUTEMOMENTUM|SXF_NOCHECKPOSITION,0);
-		A_PlaySound(seesound);
+		A_StartSound(seesound);
 	}
 	
 	states
@@ -210,7 +210,7 @@ class Bogus_NightmareDemon : HDMobBase
 					A_SpawnItemEx("HDSmoke",random(-1,1),random(-1,1),random(4,24),vel.x,vel.y,vel.z+random(1,3),0,SXF_ABSOLUTEMOMENTUM|SXF_NOCHECKPOSITION,0);
 				}
 			}
-			NDEM E 0 A_PlaySound(attacksound);
+			NDEM E 0 A_StartSound(attacksound);
 			NDEM A 0 A_ChangeVelocity(random(20, 30), 0, random(5, 7), CVF_RELATIVE);
 			NDEM A 0 SetStateLabel("meleewait");
 			
@@ -237,7 +237,7 @@ class Bogus_NightmareDemon : HDMobBase
 		melee:
 		chomp:
 			NDEM E 0 A_FaceTarget(60);
-			NDEM E 0 A_PlaySound("demon/melee");
+			NDEM E 0 A_StartSound("demon/melee");
 			NDEM EF 3;
 			// nabbed from HD's ninjapirate
 			NDEM F 0
@@ -258,7 +258,7 @@ class Bogus_NightmareDemon : HDMobBase
 			NDEM EEF 1{
 				A_FaceTarget();
 				A_ChangeVelocity(1,0,0,CVF_RELATIVE);
-				if(!random(0,19))A_Pain();else if(!random(0,9))A_PlaySound("babuin/bite");
+				if(!random(0,19))A_Pain();else if(!random(0,9))A_StartSound("babuin/bite");
 				if(!random(0,200)){
 					A_ChangeVelocity(-1,0,0,CVF_RELATIVE);
 					A_ChangeVelocity(-2,0,2,CVF_RELATIVE,AAPTR_TARGET);
