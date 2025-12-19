@@ -23,3 +23,13 @@ nightmaredemon/melee dsndatk
 nightmaredemon/active dsndact
 nightmaredemon/pain dsndpain
 nightmaredemon/death dsnddth
+
+$alias formercaptain/sight chainguy/sight
+$alias formercaptain/pain chainguy/pain
+$alias formercaptain/death chainguy/death
+$alias formercaptain/active chainguy/active
+
+$alias formercorporal/sight grunt/sight
+$alias formercorporal/pain grunt/pain
+$alias formercorporal/death grunt/death
+$alias formercorporal/active grunt/active

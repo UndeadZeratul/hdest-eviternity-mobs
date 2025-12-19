@@ -11,5 +11,6 @@ This mod intends to adapt some of Eviternity's monsters for Hideous Destructor. 
   - Annihilator: Amuscaria, Vader, Xaser
   - Astral Cacodemon: Amuscaria, Vader
   - Former Captain: id Software, `EDITS UNKNOWN`
+  - Former Corporal: id Software, Seongbae "antares031" Park
   - Nightmare Cacodemon: Amuscaria, Vader, Tristan Clark, Ola "Ukiro" Björling & Seongbae "antares031" Park
   - Nightmare Demon: Amuscaria, Tristan Clark
