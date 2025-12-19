@@ -36,6 +36,7 @@ class Bogus_NightmareCacodemon : Bogus_AstralCacodemon {
 	override void beginPlay() {
 		super.beginPlay();
 
+		angery = false;
 		cloakfuzzy = 0;
 		chargemode = 0;
 	}
