@@ -4,151 +4,330 @@
 // -ghtmare.
 // ================================================================
 
-class Bogus_NightmareDemon : HDMobBase
-{
-	bool cloaked;
+class Bogus_NightmareDemon : NinjaPirate {
 	bool angery;
 	bool cloakfuzzy;
 	
-	default
-	{
-		height 50;
-		radius 18;
-		meleerange 48;
-		meleethreshold 512;
+	default {
+		//$Category "Monsters/Hideous Destructor"
+		//$Title "Nightmare Demon"
+		//$Sprite "NDEMA1"
+
+		translation 0;
+		hdmobbase.shields 240;
+		health 300;
+		painchance 100;
+
+		seesound "nightmareDemon/sight";
+		painsound "nightmareDemon/pain";
+		deathsound "nightmareDemon/death";
+		activesound "nightmareDemon/active";
+		meleesound "nightmareDemon/melee";
+
+		tag "$TAG_NIGHTMAREDEMON";
+		bloodcolor "08 eb cc";
+
 		maxdropoffheight 48;
 		maxstepheight 48;
-		speed 8;
-		
-		seesound "nightmaredemon/see";
-		attacksound "nightmaredemon/melee";
-		painsound "nightmaredemon/pain";
-		deathsound "nightmaredemon/death";
-		activesound "nightmaredemon/active";
-		
+		damagefactor "Balefire", 0.1;
 		obituary "$OB_NIGHTMAREDEMON";
-		tag "$TAG_NIGHTMAREDEMON";
-		
-		health 300;
-		hdmobbase.shields 240;
-		painchance 100;
+		speed 8;
 	}
 	
-	override void PostBeginPlay()
-	{
+	override void PostBeginPlay() {
 		super.PostBeginPlay();
 
-		Resize(0.9, 1.1);
-
-		cloaked = false;
 		cloakfuzzy = false;
-		bbiped = true;
+		bBIPED = true;
+		bONLYSCREAMONDEATH = true;
+
+		translation = 0;
 	}
 	
-	override void tick()
-	{
+	override void tick() {
 		super.tick();
-		if (!bNoTimeFreeze && isFrozen())
-			return;
+
+		if (!bNOTIMEFREEZE && isFrozen()) return;
 			
-		if (cloaked)
-		{
-			if(cloakfuzzy)
-			{
-				if (!random(0, 7))
-				{
-					A_SetRenderStyle(0, STYLE_None);
+		if (cloaked) {
+			if (cloakfuzzy) {
+				if (!random(0, 7)) {
 					cloakfuzzy = false;
+
+					A_SetRenderStyle(0, STYLE_None);
 				}
-			}
-			else if (!random(0, 63))
-			{
+			} else if (!random(0, 63)) {
 				cloakfuzzy = true;
+
 				A_SetRenderStyle(frandom(0.5, 0.8), STYLE_Fuzzy);
 			}
-		}
-		else
-		{
+		} else {
 			A_SetRenderStyle(1, STYLE_Normal);
 		}
 
-		let shields = hdmagicshield(self.findinventory("hdmagicshield"));
-		if ((!shields || shields.amount < 240) && !angery)
-		{
+		if (countInv('HDMagicShield') < 240 && !angery) {
 			angery = true;
-			SetStateLabel("see");
+
+			setStateLabel("see");
 		}
 	}
-	
-	void A_Cloak()
-	{
-		cloaked = true;
+
+	void A_BlurWander(bool dontlook = false) {
+		A_HDWander(dontlook ? 0 : CHF_LOOK);
+		A_SpawnItemEx(
+			"Bogus_NightmareDemonBlurShort",
+			frandom(-2, 2), frandom(-2, 2), frandom(-2, 2),
+			flags: SXF_TRANSFERSPRITEFRAME
+		);
+	}
+
+	void A_BlurChase() {
+		speed = getDefaultByType(getClass()).speed;
+
+		A_HDChase();
+		A_SpawnItemEx(
+			"Bogus_NightmareDemonBlurShort",
+			frandom(-2, 2), frandom(-2, 2), frandom(-2, 2),
+			flags: SXF_TRANSFERSPRITEFRAME
+		);
+	}
+
+	void A_CloakedChase() {
+		bFRIGHTENED = health < 90;
+		frame = (level.time&(1|2|4|8)) >> 2;
+
+		if (!(level.time&3)) {
+			alpha = !random(0, 7);
+			A_SetTranslucent(alpha, alpha ? 2 : 0);
+			if (!(level.time&4)) GiveBody(1);
+		}
+
+		bSHOOTABLE = alpha || random(0, 15);
+		speed = (bSHOOTABLE && alpha) ? 5 : getDefaultByType(getClass()).speed;
+
+		A_Chase("melee", flags: CHF_NIGHTMAREFAST);
+
+		if(
+			!random(0, 15)
+			&& health > 160
+			&& !(target && checkSight(target))
+		) {
+			setStateLabel("uncloak");
+		}
+	}
+
+	void A_Cloak() {
+		Cloak();
 		A_SpawnItemEx("Bogus_NightmareDemonBlur", zofs: 1, flags: SXF_TRANSFERSPRITEFRAME|SXF_NOCHECKPOSITION);
 	}
 	
-	void A_Uncloak()
-	{
+	void A_Uncloak() {
+		for (int i = 0; i < 3; i++) A_SpawnItemEx("HDSmoke",frandom(-1,1),frandom(-1,1),frandom(4,24),vel.x,vel.y,vel.z+frandom(1,3),0,SXF_ABSOLUTEMOMENTUM|SXF_NOCHECKPOSITION,0);
+
+		Cloak(false);
+		bFRIGHTENED = false;
+		bSOLID = true;
+		bSHOOTABLE = true;
+		bNOPAIN = false;
+		bSHADOW = false;
+		bNOTARGET = false;
+
 		A_FaceTarget();
-		cloaked = false;
-		A_SpawnItemEx("HDSmoke",random(-1,1),random(-1,1),random(4,24),vel.x,vel.y,vel.z+random(1,3),0,SXF_ABSOLUTEMOMENTUM|SXF_NOCHECKPOSITION,0);
-		A_SpawnItemEx("HDSmoke",random(-1,1),random(-1,1),random(4,24),vel.x,vel.y,vel.z+random(1,3),0,SXF_ABSOLUTEMOMENTUM|SXF_NOCHECKPOSITION,0);
-		A_SpawnItemEx("HDSmoke",random(-1,1),random(-1,1),random(4,24),vel.x,vel.y,vel.z+random(1,3),0,SXF_ABSOLUTEMOMENTUM|SXF_NOCHECKPOSITION,0);
 		A_StartSound(seesound);
 	}
 	
-	states
-	{
+	states {
 		spawn:
-			NDEM A 0 nodelay
-			{
-				let shields = hdmagicshield(self.findinventory("hdmagicshield"));
-				shields.amount = 240;
-				cloaked = true;
-			}
-			
+			TNT1 A 0 nodelay A_JumpIf(cloaked, "SpawnUnCloak");
 		spawn2:
-			NDEM AABB 4 A_LookEx(fov: 270);
+			TNT1 A 0 A_JumpIf(!bAMBUSH, "spawnwander");
+			TNT1 A 0 A_SpawnItemEx(
+				"HDSmoke", random(-1, 1), random(-1, 1), random(4, 24),
+				vel.x, vel.y, vel.z + random(1,3),
+				0, SXF_ABSOLUTEMOMENTUM|SXF_NOCHECKPOSITION, 0
+			);
+			TNT1 A 0 Cloak();
+		spawnstillcloaked:
+			TNT1 A 0 GiveBody(2);
+			TNT1 A 10 A_HDLook();
 			loop;
-			
+		spawnwander:
+			NDEM ABCD 8 A_BlurWander();
+			TNT1 A 0 A_Jump(48, "spawnstill");
+			TNT1 A 0 A_Jump(48, 1);
+			loop;
+			TNT1 A 0 A_StartSound(activesound, CHAN_VOICE);
+			TNT1 A 0 A_SpawnItemEx(
+				"HDSmoke",
+				random(-1,1), random(-1,1), random(4,24),
+				vel.x, vel.y, vel.z + random(1, 3),
+				0, SXF_ABSOLUTEMOMENTUM|SXF_NOCHECKPOSITION, 0
+			);
+			TNT1 A 0 A_Cloak();
+		spawnwandercloaked:
+			TNT1 A 0 GiveBody(2);
+			TNT1 A 0 A_HDLook();
+			TNT1 A 7 A_Wander();
+			TNT1 A 0 A_Jump(12, 1);
+			loop;
+			TNT1 A 0 A_SpawnItemEx(
+				"HDSmoke",
+				random(-1, 1), random(-1, 1), random(4, 24),
+				vel.x, vel.y, vel.z + random(1, 3),
+				0, SXF_ABSOLUTEMOMENTUM|SXF_NOCHECKPOSITION, 0
+			);
+			TNT1 A 0 A_Uncloak();
+			TNT1 A 0 A_StartSound("nightmaredemon/active", CHAN_VOICE);
+		spawnstill:
+			NDEM E 10 A_Jump(48, "spawnwander");
+			TNT1 A 0 A_HDLook();
+			NDEM E 10 A_SetAngle(angle + random(-20, 20));
+			NDEM EEFF 10 A_HDLook();
+			loop;
+
+		spawnuncloak:
+			NDEM G 0 A_Uncloak();
+			#### B 0 A_SetTranslucent(0,0);
+			#### B 2 A_SetTranslucent(0.2);
+			#### B 2 A_SetTranslucent(0.4);
+			#### B 2 A_SetTranslucent(0.6);
+			#### B 2 A_SetTranslucent(0.8);
+			#### B 2 A_SetTranslucent(1);
+			goto spawn2;
+
 		see:
-			NDEM A 0
-			{
-				if (!target || target.health <= 0)
-				{
-					angery = false;
-				}
-				
-				if(angery)
-				{
-					if (cloaked)
-					{
-						A_Uncloak();
-					}
+			#### A 0 {
+				if (!target || target.health <= 0) angery = false;
+
+				if (angery) {
+					if (cloaked) A_Uncloak();
 					
 					speed = 28;
-					SetStateLabel("chase");
-				}
-				else
-				{
-					if (!cloaked)
-					{
-						A_Cloak();
-					}
+					setStateLabel("chase");
+				} else {
+					if (!cloaked) A_Cloak();
 					
 					speed = 14;
-					SetStateLabel("notice");
+					setStateLabel("notice");
 				}
 			}
+		seerunnin:
+			NDEM ABCD 4 A_BlurChase();
+			TNT1 A 0 Cloak(randomPick(0, 0, 0, 1));
+			goto see;
+
+		seecloaked:
+			NDEM A 1 A_CloakedChase();
+			loop;
+
+		cloak:
+			NDEM GGG 0 A_SpawnItemEx(
+				"HDSmoke",
+				frandom(-1, 1), frandom(-1, 1), frandom(4, 24),
+				vel.x, vel.y, vel.z + random(1, 3),
+				0, SXF_ABSOLUTEMOMENTUM|SXF_NOCHECKPOSITION, 0
+			);
+			#### G 0 A_Cloak();
+			#### G 1 A_SetTranslucent(0.8);
+			#### G 1 A_SetTranslucent(0.4);
+			#### G 1 A_SetTranslucent(0.2, 2);
+			TNT1 AAAAA 0 A_Chase(null);
+			goto see;
+
+		uncloak:
+			NDEM G 0 A_Uncloak();
+			#### G 0 A_SetTranslucent(0,0);
+			#### G 1 A_SetTranslucent(0.2);
+			#### G 1 A_SetTranslucent(0.4);
+			#### G 1 A_SetTranslucent(0.6);
+			#### G 1 A_SetTranslucent(0.8);
+			#### G 0 A_SetTranslucent(1);
+			goto see;
 			
+		melee:
+			NDEM G 0 A_JumpIf(cloaked,"uncloak");
+			#### E 0 A_FaceTarget(60);
+			#### E 0 A_StartSound("demon/melee");
+			#### EF 3;
+			// nabbed from HD's ninjapirate
+			#### F 0 {
+				A_CustomMeleeAttack(random(1, 3) * 2, "misc/bulletflesh", "", "piercing", true);
+
+				if (
+					target
+					&& distance3D(target) < 50
+					&& checkMove(0.5 * (pos.xy + target.pos.xy), PCM_NOACTORS)
+					&& random(0, 3)
+				) {
+					setStateLabel("latch");
+				}
+			}
+			#### GGGG 0 A_CustomMeleeAttack(random(1, 18), "misc/bulletflesh", "", "teeth", true);
+		meleeend:
+			NDEM G 10;
+			goto see;
+			
+		// nabbed from HD's ninjapirate
+		latch:
+			NDEM EEF 1 {
+				A_FaceTarget();
+				A_ChangeVelocity(1, 0, 0, CVF_RELATIVE);
+
+				if (!random(0, 19)) {
+					A_Pain();
+				} else if (!random(0, 9)) {
+					A_StartSound("babuin/bite");
+				}
+
+				if (!random(0, 200)) {
+					A_ChangeVelocity(-1, 0, 0, CVF_RELATIVE);
+					A_ChangeVelocity(-2, 0, 2, CVF_RELATIVE, AAPTR_TARGET);
+
+					setStateLabel("see");
+					return;
+				}
+
+				if (
+					!target
+					|| target.health < 1
+					|| distance3D(target) > 50
+				) {
+					setStateLabel("meleeend");
+					return;
+				}
+
+				A_ScaleVelocity(0.2, AAPTR_TARGET);
+				A_ChangeVelocity(random(-3, 3), random(-3, 3), random(-3, 3), 0, AAPTR_TARGET);
+				A_DamageTarget(
+					random(0, 5),
+					random(0, 3) ? "teeth" : "falling",
+					0, "none", "none",
+					AAPTR_DEFAULT,
+					AAPTR_DEFAULT
+				);
+
+				if (health < 1) setStateLabel("death");
+			}
+			loop;
+			
+		pain:
+			NDEM H 2 {
+				if (!angery) angery = true;
+			}
+			#### H 2 A_Pain();
+			goto see;
+
 		notice:
-			NDEM ABCD 8
-			{
+			NDEM ABCD 8 {
 				A_HDChase();
-				if (!random(0, 3) && CheckIfCloser(target, radius + 512)
-					&& A_JumpIfTargetInLOS("lunge"))
-				{
+
+				if (
+					!random(0, 3)
+					&& CheckIfCloser(target, radius + 512)
+					&& A_JumpIfTargetInLOS("lunge")
+				) {
 					A_FaceTarget();
-					SetStateLabel("lunge");
+					setStateLabel("lunge");
 				}
 			}
 			loop;
@@ -157,191 +336,149 @@ class Bogus_NightmareDemon : HDMobBase
 			NDEM ABCD 4
 			{
 				A_HDChase();
-				if (!random(0, 3) && CheckIfCloser(target, radius + 256)
-					&& A_JumpIfTargetInLOS("lunge"))
-				{
-					SetStateLabel("lunge");
-				}
-				else if (!random(0, 31) && A_JumpIfTargetInLOS("lunge"))
-				{
-					SetStateLabel("lunge");
+
+				if (
+					!random(0, 3)
+					&& CheckIfCloser(target, radius + 256)
+					&& A_JumpIfTargetInLOS("lunge")
+				) {
+					setStateLabel("lunge");
+				} else if (
+					!random(0, 31)
+					&& A_JumpIfTargetInLOS("lunge")
+				) {
+					setStateLabel("lunge");
 				}
 			}
 			loop;
-			
-		pain:
-			NDEM H 0
-			{
-				if (!angery)
-				{
-					angery = true;
-				}
-			}
-			NDEM H 2;
-			NDEM H 2 A_Pain();
-			NDEM H 0 SetStateLabel("see");
 
 		lunge:
-			NDEM ABCD 4
-			{
+			NDEM ABCD 4 {
 				A_HDChase();
-				if (!A_JumpIfTargetInLOS("lunge"))
-				{
-					SetStateLabel("see");
-				}
+
+				if (!A_JumpIfTargetInLOS("lunge")) setStateLabel("see");
 			}
-			NDEM E 0
-			{
-				if (!angery)
-				{
-					angery = true;
-				}
+			#### E 0 {
+				if (!angery) angery = true;
+
 				cloaked = false;
 			}
-			NDEM EE 2 A_FaceTarget(30);
-			NDEM E 6;
-			NDEM E 0
-			{
-				if (random(0, 2))
-				{
+			#### EE 2 A_FaceTarget(30);
+			#### E 6;
+			#### E 0 {
+				if (random(0, 2)) {
 					A_SpawnItemEx("Bogus_NightmareDemonBlur", flags: SXF_TRANSFERSPRITEFRAME|SXF_NOCHECKPOSITION);
-					A_SpawnItemEx("HDSmoke",random(-1,1),random(-1,1),random(4,24),vel.x,vel.y,vel.z+random(1,3),0,SXF_ABSOLUTEMOMENTUM|SXF_NOCHECKPOSITION,0);
-					A_SpawnItemEx("HDSmoke",random(-1,1),random(-1,1),random(4,24),vel.x,vel.y,vel.z+random(1,3),0,SXF_ABSOLUTEMOMENTUM|SXF_NOCHECKPOSITION,0);
-					A_SpawnItemEx("HDSmoke",random(-1,1),random(-1,1),random(4,24),vel.x,vel.y,vel.z+random(1,3),0,SXF_ABSOLUTEMOMENTUM|SXF_NOCHECKPOSITION,0);
+
+					for (int i = 0; i < 3; i++) A_SpawnItemEx("HDSmoke",frandom(-1,1),frandom(-1,1),frandom(4,24),vel.x,vel.y,vel.z+frandom(1,3),0,SXF_ABSOLUTEMOMENTUM|SXF_NOCHECKPOSITION,0);
 				}
 			}
-			NDEM E 0 A_StartSound(attacksound);
-			NDEM A 0 A_ChangeVelocity(random(20, 30), 0, random(5, 7), CVF_RELATIVE);
-			NDEM A 0 SetStateLabel("meleewait");
-			
+			#### E 0 A_StartSound(meleesound);
+			#### A 0 A_ChangeVelocity(random(20, 30), 0, random(5, 7), CVF_RELATIVE);
 		meleewait:
-			NDEM EEEEEEEEEEEEEEEE 1
-			{
+			NDEM EEEEEEEEEEEEEEEE 1 {
 				A_SpawnItemEx("Bogus_NightmareDemonBlurShort", zofs: 1, flags: SXF_TRANSFERSPRITEFRAME|SXF_NOCHECKPOSITION);
 				
-				if (CheckIfCloser(target, meleerange))
-				{
-					SetStateLabel("chomp");
-				}
-				
-				if (vel.z < 1)
-				{
-					if (!random(0, 2))
-					{
-						SetStateLabel("lunge");
-					}
-				}
-			}
-			NDEM A 0 SetStateLabel("see");
-			
-		melee:
-		chomp:
-			NDEM E 0 A_FaceTarget(60);
-			NDEM E 0 A_StartSound("demon/melee");
-			NDEM EF 3;
-			// nabbed from HD's ninjapirate
-			NDEM F 0
-			{
-				A_CustomMeleeAttack(random(1,3)*2,"misc/bulletflesh","","piercing",true);
-				if(
-					(target&&distance3d(target)<50)
-					&&(random(0,3))
-				){
-					setstatelabel("latch");
-				}
-			}
-			NDEM GGGG 0 A_CustomMeleeAttack(random(1,18),"misc/bulletflesh","","teeth",true);
-			NDEM A 0 SetStateLabel("see");
-			
-		// nabbed from HD's ninjapirate
-		latch:
-			NDEM EEF 1{
-				A_FaceTarget();
-				A_ChangeVelocity(1,0,0,CVF_RELATIVE);
-				if(!random(0,19))A_Pain();else if(!random(0,9))A_StartSound("babuin/bite");
-				if(!random(0,200)){
-					A_ChangeVelocity(-1,0,0,CVF_RELATIVE);
-					A_ChangeVelocity(-2,0,2,CVF_RELATIVE,AAPTR_TARGET);
-					setstatelabel("see");
+				if (CheckIfCloser(target, meleerange)) {
+					setStateLabel("melee");
+
 					return;
 				}
-				if(
-					!target
-					||target.health<1
-					||distance3d(target)>50
-				){
-						setstatelabel("see");
-						return;
-				}
-				A_ScaleVelocity(0.2,AAPTR_TARGET);
-				A_ChangeVelocity(random(-3,3),random(-3,3),random(-3,3),0,AAPTR_TARGET);
-				A_DamageTarget(random(0,5),random(0,3)?"teeth":"falling",0,"none","none",AAPTR_DEFAULT,AAPTR_DEFAULT);
-			}
-			NDEM F 0
-			{
-				if (health < 1)
-				{
-					SetStateLabel("death");
+
+				if (vel.z < 1 && !random(0, 2)) {
+					setStateLabel("lunge");
+
+					return;
 				}
 			}
-			loop;
+			goto see;
 		
 		death:
-			NDEM I 0
-			{
-				cloaked = false;
-				A_Die();
-				A_Scream();
-			}
-			NDEM IJKLM 4;
+			TNT1 A 0 A_SpawnItemEx(
+				"BFGNecroShard",
+				0, 0, 0,
+				0, 0, 5,
+				0, SXF_TRANSFERPOINTERS|SXF_SETMASTER, 196
+			);
+			TNT1 A 0 A_Jump(128, 2);
+			TNT1 A 0 A_JumpIf(cloaked, "DeathCloaked");
+			NDEM GGG 0 A_SpawnItemEx(
+				"HDSmoke",
+				random(-1, 1), random(-1, 1), random(4, 24),
+				vel.x, vel.y, vel.z + random(1, 3),
+				0, SXF_ABSOLUTEMOMENTUM|SXF_NOCHECKPOSITION, 0
+			);
+		deathend:
+			TNT1 A 0 A_SetTranslucent(1);
+			NDEM I 8;
+			#### J 8 A_Scream();
+			#### K 4;
+			#### L 4 A_NoBlocking();
+			#### M 4;
+		dead:
+		death.spawndead:
+			TNT1 A 0 A_FadeIn(0.01);
+			NDEM M 3 canraise A_JumpIf(floorz > pos.z - 6, 1);
+			loop;
+			NDEM N 5 canraise A_JumpIf(floorz <= pos.z - 6, "dead");
+			loop;
+		deathcloaked:
+			TNT1 A 20 A_SetTranslucent(1);
+			TNT1 A 4 A_NoBlocking;
+			TNT1 A 4 A_SetTranslucent(0, 0);
+			NDEM N 350 A_SetTics(random(10, 15) * 35);
+			goto dead;
+			NDEM NNNNNNNNNN 20 A_FadeIn(0.1);
 			NDEM N -1;
 			stop;
-			
+
 		raise:
+			NDEM N 4 A_SetTranslucent(1, 0);
+			TNT1 A 0 A_JumpIf(cloaked, "raisecloaked");
 			NDEM NMLKJI 6;
 			goto see;
-		// the following are taken from HD
+
+		raisecloaked:
+			TNT1 AAA 0 A_SpawnItemEx(
+				"HDSmoke",
+				random(-1, 1), random(-1, 1), random(4, 24),
+				vel.x, vel.y, vel.z + random(1, 3),
+				0, SXF_ABSOLUTEMOMENTUM|SXF_NOCHECKPOSITION, 0
+			);
+			NDEM NNNNNN 4 A_FadeOut(0.15);
+			TNT1 A 0 A_SetTranslucent(0, 0);
+			goto see;
+
 		ungib:
-			TROO U 6{
-				cloaked=false;
-				if(alpha<1.){
+			TROO U 6 {
+				A_Uncloak();
+
+				if (alpha < 1.0) {
 					A_SetTranslucent(1);
-					A_SpawnItemEx("HDSmoke",random(-1,1),random(-1,1),random(4,24),vel.x,vel.y,vel.z+random(1,3),0,SXF_ABSOLUTEMOMENTUM|SXF_NOCHECKPOSITION,0);
+					A_SpawnItemEx(
+						"HDSmoke",
+						random(-1, 1), random(-1, 1), random(4, 24),
+						vel.x, vel.y, vel.z + random(1, 3),
+						0, SXF_ABSOLUTEMOMENTUM|SXF_NOCHECKPOSITION, 0
+					);
 				}
-				A_SpawnItemEx("MegaBloodSplatter",0,0,4,
-					vel.x,vel.y,vel.z+3,0,
-					SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM
-				);
+
+				A_GibSplatter();
 			}
 			TROO UT 8;
 			TROO SRQ 6;
 			TROO PO 4;
 			goto see;
-		gib:
-			NDEM I 0
-			{
-				cloaked = false;
-				A_Die();
-			}
-			TROO O 0 A_XScream();
-			TROO O 0 A_NoBlocking();
-			TROO OPQ 4 spawn("MegaBloodSplatter",pos+(0,0,34),ALLOW_REPLACE);
-			TROO RST 4;
-			TROO U -1;
-			stop;
 	}
 }
 
 class Bogus_NightmareDemonBlur : actor
 {
-	default
-	{
+	default {
 		renderstyle "normal";
 		+nointeraction;
 	}
 	
-	states
-	{
+	states {
 		spawn:
 			NDEM # 8 A_FadeOut(frandom(0.01, 0.05));
 			loop;
@@ -350,8 +487,7 @@ class Bogus_NightmareDemonBlur : actor
 
 class Bogus_NightmareDemonBlurShort : Bogus_NightmareDemonBlur
 {
-	states
-	{
+	states {
 		spawn:
 			NDEM # 1 A_FadeOut(frandom(0.01, 0.05));
 			loop;
