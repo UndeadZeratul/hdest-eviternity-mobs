@@ -7,9 +7,17 @@ server float astralcaco_cacodemon_spawn_bias          = 0.05;
 server float astralcaco_astralcaco_spawn_bias         = -1.0;
 server bool  astralcaco_persistent_spawning           = false;
 
+server float nightmarecaco_cacodemon_spawn_bias       = 0.02;
+server float nightmarecaco_nightmarecaco_spawn_bias   = -1.0;
+server bool  nightmarecaco_persistent_spawning        = false;
+
 server float formercaptain_chaingunguy_spawn_bias     = 0.5;
 server float formercaptain_formercaptain_spawn_bias   = -1.0;
 server bool  formercaptain_persistent_spawning        = false;
+
+server float formercorporal_zombieman_spawn_bias      = 7.25;
+server float formercorporal_formercorporal_spawn_bias = -1.0;
+server bool  formercorporal_persistent_spawning       = false;
 
 server float nightmaredemon_babuin_spawn_bias         = 0.0;
 server float nightmaredemon_specbabuin_spawn_bias     = 1.3;
