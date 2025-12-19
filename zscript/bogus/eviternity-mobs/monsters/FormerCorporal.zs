@@ -32,7 +32,7 @@ class Bogus_FormerCorporal : ZombieStormtrooper {
         firemode = 0;
 
         // Prevent Zombiemen Translations
-        translation = "";
+		A_SetTranslation("");
     }
 
     // TODO: Implement Death Drops

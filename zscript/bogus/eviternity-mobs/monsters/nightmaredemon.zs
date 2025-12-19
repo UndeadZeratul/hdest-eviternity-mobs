@@ -41,7 +41,7 @@ class Bogus_NightmareDemon : NinjaPirate {
 		bBIPED = true;
 		bONLYSCREAMONDEATH = true;
 
-		translation = 0;
+		A_SetTranslation("");
 	}
 	
 	override void tick() {
