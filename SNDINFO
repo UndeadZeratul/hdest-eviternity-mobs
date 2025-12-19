@@ -4,12 +4,6 @@ astralCaco/death dsacacdt
 astralCaco/active dsflamst
 astralCaco/melee dsclaw
 
-nightmareCaco/sight dsacacsi
-nightmareCaco/pain dsacacpn
-nightmareCaco/death dsacacdt
-nightmareCaco/active dsflamst
-nightmareCaco/melee dsclaw
-
 astralorb/charge dsplsidl
 astralorb/kaboom dsrxplod
 
@@ -33,3 +27,9 @@ $alias formercorporal/sight grunt/sight
 $alias formercorporal/pain grunt/pain
 $alias formercorporal/death grunt/death
 $alias formercorporal/active grunt/active
+
+$alias nightmareCaco/sight astralCaco/sight
+$alias nightmareCaco/pain astralCaco/pain
+$alias nightmareCaco/death astralCaco/death
+$alias nightmareCaco/active astralCaco/active
+$alias nightmareCaco/melee astralCaco/melee
