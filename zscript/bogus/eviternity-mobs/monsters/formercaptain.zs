@@ -22,6 +22,13 @@ class Bogus_FormerCaptain : VulcanetteZombie
 		obituary "$OB_VULCZOMBIE";
 	}
 
+	override void postbeginplay(){
+		super.postbeginplay();
+		
+		// Prevent Vulcanette Black/Red Color Scheme
+		A_SetTranslation("");
+	}
+
 	// Carbon copy of VulcanetteZombie, except uses FCAP sprites instead of CPOS
 	states
 	{
