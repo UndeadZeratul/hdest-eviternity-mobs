@@ -11,11 +11,23 @@ addSpawnTableSingleEntry => { "tableName": "CacodemonReplaces", "name": "Bogus_A
 newSpawnTable => { "spawnName": "AstralCaco", "tableName": "AstralCacoReplaces" }
 addSpawnTableSingleEntry => { "tableName": "AstralCacoReplaces", "name": "Bogus_AstralCacodemon", "weight": "#astralcaco_astralcaco_spawn_bias", "persists": "#astralcaco_persistent_spawning" }
 
+// Nightmare Astral Cacodemon Spawn Entries
+addSpawnTableSingleEntry => { "tableName": "CacodemonReplaces", "name": "Bogus_NightmareCacodemon", "weight": "#nightmarecaco_cacodemon_spawn_bias", "persists": "#nightmarecaco_persistent_spawning" }
+
+newSpawnTable => { "spawnName": "NightmareCacodemon", "tableName": "NightmareCacoReplaces" }
+addSpawnTableSingleEntry => { "tableName": "NightmareCacoReplaces", "name": "Bogus_NightmareCacodemon", "weight": "#nightmarecaco_nightmarecaco_spawn_bias", "persists": "#nightmarecaco_persistent_spawning" }
+
 // Former Captain Spawn Entries
 addSpawnTableSingleEntry => { "tableName": "ChaingunGuyReplaces", "name": "Bogus_FormerCaptain", "weight": "#formercaptain_chaingunguy_spawn_bias", "persists": "#formercaptain_persistent_spawning" }
 
 newSpawnTable => { "spawnName": "FormerCaptain", "tableName": "FormerCaptainReplaces" }
 addSpawnTableSingleEntry => { "tableName": "FormerCaptainReplaces", "name": "Bogus_FormerCaptain", "weight": "#formercaptain_formercaptain_spawn_bias", "persists": "#formercaptain_persistent_spawning" }
+
+// Former Corporal Spawn Entries
+addSpawnTableSingleEntry => { "tableName": "ZombieManReplaces", "name": "Bogus_FormerCorporal", "weight": "#formercorporal_zombieman_spawn_bias", "persists": "#formercorporal_persistent_spawning" }
+
+newSpawnTable => { "spawnName": "FormerCorporal", "tableName": "FormerCorporalReplaces" }
+addSpawnTableSingleEntry => { "tableName": "FormerCorporalReplaces", "name": "Bogus_FormerCorporal", "weight": "#formercorporal_formercorporal_spawn_bias", "persists": "#formercorporal_persistent_spawning" }
 
 // Nightmare Demon Spawn Entries
 addSpawnTableSingleEntry => { "tableName": "DemonReplaces", "name": "Bogus_NightmareDemon", "weight": "#nightmaredemon_babuin_spawn_bias", "persists": "#nightmaredemon_persistent_spawning" }
@@ -26,12 +38,15 @@ addSpawnTableSingleEntry => { "tableName": "NightmareDemonReplaces", "name": "Bo
 
 
 // Bounty Targets
+newMerchantBountyTarget => { "name": "Bogus_FormerCorporal", "value": "200" }
 newMerchantBountyTarget => { "name": "Bogus_FormerCaptain", "value": "350" }
 newMerchantBountyTarget => { "name": "Bogus_NightmareDemon", "value": "400" }
 newMerchantBountyTarget => { "name": "Bogus_AstralCacodemon", "value": "700" }
+newMerchantBountyTarget => { "name": "Bogus_NightmareCacodemon", "value": "800" }
 newMerchantBountyTarget => { "name": "Bogus_Annihilator", "value": "1000" }
 
 
 // UaS Flashlight Support
+addFlashlightHumanClass => { "name": "Bogus_FormerCorporal" }
 addFlashlightHumanClass => { "name": "Bogus_FormerCaptain" }
 addFlashlightOtherClass => { "name": "Bogus_Annihilator" }
