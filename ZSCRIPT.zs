@@ -1,8 +1,9 @@
 version "4.14"
 
-#include "zscript/bogus/eviternity-mobs/monsters/astralcaco.zs"
-#include "zscript/bogus/eviternity-mobs/monsters/annihilator.zs"
-#include "zscript/bogus/eviternity-mobs/monsters/nightmaredemon.zs"
-#include "zscript/bogus/eviternity-mobs/monsters/formercaptain.zs"
+#include "zscript/bogus/eviternity-mobs/monsters/AstralCaco.zs"
+#include "zscript/bogus/eviternity-mobs/monsters/Annihilator.zs"
+#include "zscript/bogus/eviternity-mobs/monsters/FormerCaptain.zs"
+#include "zscript/bogus/eviternity-mobs/monsters/NightmareAstralCaco.zs"
+#include "zscript/bogus/eviternity-mobs/monsters/NightmareDemon.zs"
 
 #include "zscript/bogus/eviternity-mobs/handlers/spawnhandler.zs"

@@ -4,36 +4,39 @@
 // float, be demon, eat marine & die
 // ================================================================================================
 
-class Bogus_AstralCacodemon : HDMobBase
-{
-	OrbCharge chargethingy;
-	
-	int chargemode;
-	// 0: not charging
-	// 1: charging
-	// 2: fucked up
-	
-	default
-	{
-		health 400;
-		hdmobbase.shields 500;
+class Bogus_AstralCacodemon : HDMobBase {
+
+	default {
+		//$Category "Monsters/Hideous Destructor"
+		//$Title "Astral Cacodemon"
+		//$Sprite "ACACA1"
+
+		health 200;
+		HDMobBase.shields 200;
 		radius 24;
 		height 48;
 		mass 400;
-		
+
+		meleerange 128;
+
 		+float 
 		+nogravity
-		
-		seesound "astral/sight";
-		painsound "astral/pain";
-		deathsound "astral/death";
-		activesound "astral/active";
-		meleesound "astral/melee";
-		
+		+pushable
+		+noblooddecals
+		+hdmobbase.doesntbleed
+		+hdmobbase.headless
+		+hdmobbase.onlyscreamondeath
+
+		seesound "astralCaco/sight";
+		painsound "astralCaco/pain";
+		deathsound "astralCaco/death";
+		activesound "astralCaco/active";
+		meleesound "astralCaco/melee";
+
 		tag "$TAG_ASTRALCACO";
 		bloodcolor "22 22 22";
 
-		+pushable
+		gravity HDCONST_GRAVITY * 0.25;
 		pushfactor 0.05;
 		painchance 90;
 		deathheight 29;
@@ -45,541 +48,271 @@ class Bogus_AstralCacodemon : HDMobBase
 		hitobituary "$OB_HIT_ASTRALCACO";
 		speed 12;
 		maxtargetrange 8192;
-		meleethreshold 128;
 	}
-	
-	override void beginplay()
-	{
-		super.beginplay();
-		
-		Resize(0.9, 1.3);
+
+	override void beginPlay() {
+		super.beginPlay();
+
+		resize(0.9, 1.3);
 
 		speed *= 3. - 2 * scale.x;
-		meleethreshold = 0;
-		chargemode = 0;
 	}
 	
-	states
-	{
+	states {
 		spawn:
-			ACAC A 10
-			{
+			ACAC A 10 {
 				A_HDLook();
 				
-				if (!bambush && !random(0, 10)) A_HDWander();
+				if (!bAMBUSH && !random(0, 10)) A_HDWander();
 			}
 			wait;
 			
 		see:
-			ACAC A 4
-			{
-				A_HDChase();
-				chargemode = 0;
-			}
+			#### A 4 A_HDChase();
 			loop;
 			
 		pain:
-			ACAC H 0
-			{
-				chargemode = 2;
-			}
-			ACAC H 2
-			{					
+			#### H 2 {					
 				vel.z -= frandom(0.4, 1.4);
 			}
-			ACAC H 6 A_Pain();
-			ACAC H 3;
-			---- H 0 SetStateLabel("see");
+			#### H 6 A_Pain();
+			#### H 3;
+			goto see;
 			
 		missile:
-			ACAC A 0 A_JumpIfTargetInLOS("shoot", 10);
-			ACAC A 0 A_JumpIfTargetInLOS(2, flags: JLOSF_DEADNOJUMP);
-			---- A 0 SetStateLabel("see");
-			ACAC A 3 A_FaceTarget(40, 40, flags: FAF_MIDDLE);
+			#### A 0 A_JumpIfTargetInLOS("shoot", 10);
+			#### A 0 A_JumpIfTargetInLOS(2, flags: JLOSF_DEADNOJUMP);
+			goto see;
+			#### A 3 A_FaceTarget(40, 40, flags: FAF_MIDDLE);
 			loop;
 			
 		shoot:
-			ACAC A 0 A_JumpIfCloser(radius + 1024, "nyoom");
-			ACAC A 0 SetStateLabel("fireball");
+			#### A 0 A_JumpIfCloser(radius + 1024, "nyoom");
+			goto fireball;
 			
 		aimedfireball:
-			ACAC F 0 A_FaceTarget(40, 40, flags: FAF_TOP);
-			
+			#### F 0 A_FaceTarget(40, 40, flags: FAF_TOP);
 		fireball:
-			ACAC F 4 A_FaceTarget(20, 20, flags: FAF_TOP);
-			ACAC G 4
-			{
-				A_SpawnItemEx(
-					"astraljuice", 0, 0, 24,
-					cos(pitch) * 36, 0, -sin(pitch) * 27,
-					flags:SXF_NOCHECKPOSITION|SXF_SETTARGET|SXF_TRANSFERPITCH
-				);
-			}
-			ACAC F 4;
-			---- F 0 SetStateLabel("orbtime");
+			#### F 4 A_FaceTarget(20, 20, flags: FAF_TOP);
+			#### G 4 A_SpawnItemEx(
+				"AstralJuice",
+				0, 0, 24,
+				cos(pitch) * 36, 0, -sin(pitch) * 27,
+				flags: SXF_NOCHECKPOSITION|SXF_SETTARGET|SXF_TRANSFERPITCH
+			);
+			#### F 4;
+			goto see;
 			
 		nyoom:
-			ACAC A 0 A_ChangeVelocity(frandom(5, 7) * randompick(-1, 1),
+			#### A 0 A_ChangeVelocity(frandom(5, 7) * randompick(-1, 1),
 				frandom(10, 15) * randompick(-1, 1), frandom(1, 3) * randompick(-1, 1), flags: CVF_RELATIVE);
-			ACAC A 20;
-			ACAC A 0 A_JumpIfCloser(radius + 640, "doublefireball");
-			ACAC A 0 A_JumpIfTargetInLOS("aimedfireball");
-			ACAC A 0 SetStateLabel("fireball");
+			#### A 20;
+			#### A 0 A_JumpIfCloser(radius + 640, "doublefireball");
+			#### A 0 A_JumpIfTargetInLOS("aimedfireball");
+			goto fireball;
 			
 		doublefireball:
-			ACAC F 4;
-			ACAC F 0 A_FaceTarget(80, 40, flags: FAF_TOP);
-			ACAC G 4 bright
-			{
-				A_SpawnItemEx("HDSmoke",random(16, 32),random(-12,12),18,random(2,4),flags:SXF_NOCHECKPOSITION);
-				A_SpawnItemEx("HDSmoke",random(16, 32),random(-12,12),18,random(2,4),flags:SXF_NOCHECKPOSITION);
-				A_SpawnItemEx("HDSmoke",random(16, 32),random(-12,12),18,random(2,4),flags:SXF_NOCHECKPOSITION);
-				
-				A_SpawnItemEx(
-					"astraljuice", 0, 0, 24,
-					cos(pitch) * 14, frandom(2, 4), -sin(pitch) * random(12, 16),
-					flags:SXF_NOCHECKPOSITION|SXF_SETTARGET|SXF_TRANSFERPITCH
+			#### F 4;
+			#### F 0 A_FaceTarget(80, 40, flags: FAF_TOP);
+			#### G 4 bright {
+				for (int i = 0; i < 3; i++) A_SpawnItemEx(
+					"HDSmoke",
+					frandom(16, 32), frandom(-12, 12), frandom(2, 4),
+					flags: SXF_ABSOLUTEMOMENTUM|SXF_NOCHECKPOSITION
 				);
 				
 				A_SpawnItemEx(
-					"astraljuice", 0, 0, 24,
+					"AstralJuice",
+					0, 0, 24,
+					cos(pitch) * 14, frandom(2, 4), -sin(pitch) * random(12, 16),
+					flags: SXF_NOCHECKPOSITION|SXF_SETTARGET|SXF_TRANSFERPITCH
+				);
+				
+				A_SpawnItemEx(
+					"AstralJuice",
+					0, 0, 24,
 					cos(pitch) * 14, frandom(-4, -2), -sin(pitch) * random(10, 12),
-					flags:SXF_NOCHECKPOSITION|SXF_SETTARGET|SXF_TRANSFERPITCH
+					flags: SXF_NOCHECKPOSITION|SXF_SETTARGET|SXF_TRANSFERPITCH
 				);
 			}
-			ACAC F 4;
-			---- F 0 SetStateLabel("orbtime");
+			#### F 4;
+			goto see;
 			
 		regularball2:
-			ACAC F 4
-			{
-				A_FaceTarget(40, 40, flags: FAF_MIDDLE);
-				chargemode = 0;
-			}
-			ACAC G 4 bright A_SpawnProjectile("AstralNormalBall",flags:CMF_AIMDIRECTION,pitch);
-			ACAC FA 4;
-			
+			#### F 4 A_FaceTarget(40, 40, flags: FAF_MIDDLE);
+			#### G 4 bright A_SpawnProjectile("AstralNormalBall",flags:CMF_AIMDIRECTION,pitch);
+			#### FA 4;
 		regularball:
-			ACAC F 4
-			{
-				A_FaceTarget(40, 40, flags: FAF_MIDDLE);
-				chargemode = 0;
-			}
-			ACAC G 4 bright A_SpawnProjectile("AstralNormalBall",flags:CMF_AIMDIRECTION,pitch);
-			ACAC F 4;
-			---- F 0 SetStateLabel("see");
-			
-		orbtime:
-			ACAC F 0 A_JumpIfCloser(radius + 384, "regularball");
-			ACAC F 0
-			{
-				chargemode = 1;
-				chargethingy = OrbCharge(Spawn("OrbCharge"));
-				chargethingy.bigboy = self;
-			}
-			ACAC FFFF 4
-			{
-				vel.x /= 1.5;
-				vel.y /= 1.5;
-				vel.z /= 1.5;
-			}
-			
-			
-		chargebegin:
-			ACAC F 4
-			{
-				if (chargethingy != null)
-				{
-					if (chargethingy.chargelevel > 1.5)
-					{
-						SetStateLabel("chargemiddle");
-					}
-				}
-				else
-				{
-					SetStateLabel("see");
-				}
-				
-				A_FaceTarget(40, 40, flags: FAF_MIDDLE);
-			}
-			loop;
-			
-		chargemiddle:
-			ACAC GGGGGGGG 4 bright 
-			{
-				A_FaceTarget(10, 10, flags: FAF_MIDDLE);
-				
-				if (CheckIfCloser(target, radius + 512))
-				{
-					SetStateLabel("regularball2");
-				}
-			}
-			ACAC GGGG 4 bright A_FaceTarget(4, 4, flags: FAF_MIDDLE);
-			ACAC G 0 A_JumpIfCloser(radius + 1536, "discharge");
-			ACAC GGGG 4 bright A_FaceTarget(3, 3, flags: FAF_MIDDLE);
-			ACAC G 0 A_JumpIfCloser(radius + 2048, "discharge");
-			ACAC GGGG 4 bright A_FaceTarget(2, 2, flags: FAF_MIDDLE);
-			ACAC G 0 A_JumpIfCloser(radius + 2560, "discharge");
-			ACAC GGGG 4 bright A_FaceTarget(1, 1, flags: FAF_MIDDLE);
-			
-		discharge:
-			ACAC G 0 bright A_FaceTarget(10, 10, flags: FAF_BOTTOM);
-			ACAC G 4 bright
-			{
-				bool dumb;
-				actor alsodumb;
-				
-				[dumb, alsodumb] = A_SpawnItemEx(
-					"astralorb", 0, -1, 24,
-					cos(pitch) * 14 * chargethingy.chargelevel,
-					0, -sin(pitch) * 12 * chargethingy.chargelevel,
-					flags:SXF_NOCHECKPOSITION|SXF_SETTARGET|SXF_TRANSFERPITCH
-				);
-				
-				AstralOrb superdumb = AstralOrb(alsodumb);
-				superdumb.power = chargethingy.chargelevel / 1.5;
-				
-				chargethingy.SetStateLabel("lol");
-				
-				A_ChangeVelocity(frandom(1, 3) * superdumb.power * -1,
-					frandom(0, 1) * randompick(-1, 1),
-					flags: CVF_RELATIVE);
-			}			
-			ACAC FFFFFFFF 4 A_SpawnItemEx("HDSmoke",random(16, 32),random(-12,12),18,random(2,4),flags:SXF_NOCHECKPOSITION);
-			ACAC FFFFFFFF 4
-			{
-				A_SpawnItemEx("HDSmoke",random(16, 32),random(-12,12),18,random(2,4),flags:SXF_NOCHECKPOSITION);
-				A_Chase();
-			}
-			---- F 0 SetStateLabel("see");
+			#### F 4 A_FaceTarget(40, 40, flags: FAF_MIDDLE);
+			#### G 4 bright A_SpawnProjectile("AstralNormalBall",flags:CMF_AIMDIRECTION,pitch);
+			#### F 4;
+			goto see;
 			
 		melee:
-			ACAC FG 3 A_FaceTarget();
-			ACAC F 3 A_CustomMeleeAttack(random(30, 50),meleesound,"","teeth",true);
-			ACAC AAAA 2 
-			{
+			#### FG 3 A_FaceTarget();
+			#### F 3 A_CustomMeleeAttack(random(30, 50),meleesound,"","teeth",true);
+			#### AAAA 2  {
 				A_FaceTarget(15, 15);
 				A_ChangeVelocity(frandom(3, 5), flags: CVF_RELATIVE);
 			}
-			ACAC FG 3 A_FaceTarget();
-			ACAC F 3 A_CustomMeleeAttack(random(30, 50),meleesound,"","teeth",true);
-			ACAC A 3;
-			---- A 0 SetStateLabel("see");
+			#### FG 3 A_FaceTarget();
+			#### F 3 A_CustomMeleeAttack(random(30, 50),meleesound,"","teeth",true);
+			#### A 3;
+			goto see;
 			
 		death:
-			ACAC J 2 
-			{
+		gib:
+			#### J 2  {
 				bfloatbob = false;
 				bnogravity = false;
 				bfloat = false;
 				A_Vocalize(seesound);
 			}
-			ACAC KLM 2;
-			ACAC N 2 A_JumpIf(vel.z >= 0, "deadsplatting");
+			#### KLM 2;
+			#### N 2 A_JumpIf (vel.z >= 0, "deadsplatting");
 			wait;
 			
 		deadsplatting:
-			ACAC O 4 A_Scream();
-			ACAC PQR 4;
-			---- R 0 SetStateLabel("dead");
-			
+			#### O 4 A_Scream();
+			#### PQR 4;
 		dead:
-			ACAC S -1;
+		gibbed:
+		death:spawndead:
+			#### S -1;
 			stop;
 		
 		raise:
-			ACAC S 8 A_UnSetFloorClip;
-			ACAC SRQPONMLKJ 8;
+		ungib:
+			#### S 8 A_UnSetFloorClip();
+			#### SRQPONMLKJ 8;
 			goto see;
 	}
 }
 
-enum ASTRALCACONUMS
-{
-	ASTRALCACO_MAXHEALTH = 400,
-}
-
-class OrbCharge : HDActor
-{
-	bogus_astralcacodemon bigboy;
-	property bigboy : bigboy;
-	
-	float chargelevel;
-	property chargelevel : chargelevel;
-	
-	bool letsdothis;
-	
-	
-	default
-	{
-		+nointeraction
-		+forcexybillboard
-		
-		renderstyle "add";
-		OrbCharge.chargelevel 1;
-		alpha 0;
-	}
-	
-	override void postbeginplay()
-	{
-		super.postbeginplay();
-		
-		letsdothis = true;
-	}
-	
-	override void tick()
-	{
-		super.tick();
-		if (!bNoTimeFreeze && isFrozen())
-			return;
-		
-		if (letsdothis)
-		{
-			if (bigboy != null)
-			{
-				warp(bigboy, bigboy.radius, -1, (bigboy.height / 2) - 3, flags: WARPF_INTERPOLATE|WARPF_NOCHECKPOSITION);
-				if (bigboy.health > 0)
-				{
-					chargelevel += frandom(0.03, 0.05);
-				}
-				else
-				{
-					letsdothis = false;
-				}
-			}
-		}
-	}
-	
-	states
-	{
+class AstralJuice : ManJuice {
+	states {
 		spawn:
-			BAL2 AB 3 
-			{
-				scale = ((chargelevel / 5) + 1.5, (chargelevel / 5) + 1.5);
-				alpha = (chargelevel / 10) + 0.5;
-				
-				roll += 10;
-				scale.x *= randompick(-1, 1);
-				
-				if (bigboy != null)
-				{
-					if (!letsdothis || bigboy.chargemode != 1)
-					{
-						if (bigboy.chargemode == 2)
-						{
-							AstralOrb ohno = AstralOrb(spawn("astralorb"));
-							ohno.power = chargelevel;
-							ohno.doexplode = false;
-							ohno.warp(bigboy, bigboy.radius, flags: WARPF_NOCHECKPOSITION);
-							ohno.setstatelabel("death");
-							
-							bigboy.chargemode = 0;
-							letsdothis = false;
-						}
-						
-						scale = (1, 1);
-						SetStateLabel("death");
-					}
-				}
+			ACFB A 0 {
+				spawn("manjuicelight", pos + (0, 0, 16), ALLOW_REPLACE).target = self;
 			}
-			---- A 0 A_StartSound("astralorb/charge", attenuation: 1);
+			#### AABBAABB 1 A_FBTail();
+		spawn2:
+			#### A 2 A_FBFloat();
+			#### B 2;
 			loop;
-			
+
 		death:
-			BAL2 CDE 3 A_StartSound("misc/fwoosh");
-			stop;
-			
-		lol:
-			ASBL A 0
-			{
-				scale = (1, 1);
-				alpha = 5 * chargelevel; //make bloom go crazy
-				A_StartSound("astralorb/kaboom", attenuation: 0.5 - (chargelevel / 10));
-				letsdothis = false;
+			#### B 0 {
+				vel.z += 1.0;
+				A_HDBlast(
+					128, 66, 16,
+					"hot",
+					immolateradius: 48,
+					random(20, 90),
+					42,
+					false
+				);
+				A_SpawnChunks("HDSmokeChunk", random(2, 4), 6, 20);
+				A_StartSound("misc/fwoosh",CHAN_WEAPON);
+				scale = (0.9 * randomPick(-1, 1), 0.9);
 			}
-			ASBL ABCDEF 3;
-			stop;
-	}
-}
-
-class AstralOrbTrail : HDFireballTail
-{
-	default
-	{
-		renderstyle "add";
-		deathheight 0.9;
-		gravity 0; 
-		scale 0.6;
-	}
-	
-	states
-	{
-		spawn:
-			BAL2 CDE 2
-			{
-				roll += 10;
-				scale.x *= randompick(-1, 1);
+			#### CCCC 1 {
+				vel.z += 0.5;
+				scale *= 1.05;
 			}
-			loop;
-	}
-}
-
-class AstralOrb : HDFireball
-{
-	float power;
-	property power : power;
-	
-	bool doexplode;
-	property doexplode : doexplode;
-	
-	default
-	{
-		missiletype "AstralOrbTrail";
-		damagetype "electro";
-		activesound "astralorb/charge";
-		decal "scorch";
-		gravity 0;
-		speed 25;
-		
-		radius 8;
-		height 8;
-		
-		AstralOrb.power 1;
-		AstralOrb.doexplode true;
-	}
-	
-	override void postbeginplay()
-	{
-		scale = ((power / 3) + 1.5, (power / 3) + 1.5);
-	}
-	
-	states
-	{
-		spawn:
-			BAL2 A 0;
-			BAL2 AAABBBAAABBB 1 A_FBTail();
-			
-		spawn2: 
-			BAL2 AB 3 A_FBFloat();
-			loop;
-			
-		death:
-			BAL2 C 0
-			{
-				A_SprayDecal("Scorch",16);
-				
-				
-				int foob = 32 * power;
-				
-				actor xpl=spawn("Gyrosploder",pos-(random(-2, 2),random(-2, 2),random(-2, 2)),ALLOW_REPLACE);
-					xpl.target=target;xpl.master=master;xpl.stamina=stamina;
-					
-				for (int i = 0; i < power; i++)
-				{
-					if (doexplode)
-					{
-						A_HDBlast(
-							pushradius:256,pushamount:128,fullpushradius:96,
-							fragradius:128,fragtype:"HDB_fragRL",
-							immolateradius:128,immolateamount:random(3,60),
-							immolatechance:25
-						);
-					}
-					
-					actor ltt = spawn("AstralLingeringThunder",pos,ALLOW_REPLACE);
-					ltt.target = target;
-					ltt.stamina = foob;
+			#### DDDEEE 1 {
+				alpha -= 0.15;
+				scale *= 1.01;
+			}
+			TNT1 A 0 {
+				A_Immolate(tracer,target,80,requireSight:true);
+				addz(-20);
+			}
+			TNT1 AAAAAAAAAAAAAAA 4 {
+				if (tracer) {
+					setOrigin((tracer.pos.xy, tracer.pos.z + frandom(0.1, tracer.height * 0.4)), false);
+					vel = tracer.vel;
 				}
-				
-				if (!doexplode)
-				{
-					A_Explode(random(10,30),random(50,70),0);
-					A_Quake(2,48,0,24,"");
-				}
+
+				A_SpawnItemEx(
+					"HDSmoke",
+					frandom(-2, 2), frandom(-2, 2), frandom(0,2),
+					vel.x + frandom(2, -4), vel.y + frandom(-2, 2), vel.z + frandom(1, 4),
+					0,
+					SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM
+				);
 			}
-			BAL2 CDE 4;
 			stop;
-	}
-}
-
-class AstralJuice : manjuice
-{
-	states
-	{
-		spawn:
-			MANF A 0 
-			{
-				actor mjl = spawn("manjuicelight", pos + (0, 0, 16), ALLOW_REPLACE);
-				mjl.target = self;
-			}
-			MANF AABBAABB 1 A_FBTail();	
-			MANF A 0 SetStateLabel("spawn2");
-	}
-}
-
-class AstralLingeringThunder : LingeringThunder
-{
-	default
-	{
-		stamina 128;
 	}
 }
 
 //dont zap urself lmao
-class AstralNormalBall:HDFireball{
-	default{
-		height 12;radius 12;
+class AstralNormalBall : HDFireball {
+	default {
+		height 12;
+		radius 12;
 		gravity 0;
 		decal "BulletScratch";
-		damagefunction(random(20,40));
+		damagefunction(random(20, 40));
 	}
-	void ZapSomething(){
-		roll=frandom(0,360);
+
+	void ZapSomething() {
+		roll = frandom(0, 360);
+
 		A_StartSound("misc/arczap");
-		blockthingsiterator it=blockthingsiterator.create(self,72);
-		actor tb=target;
-		actor zit=null;
-		while(it.next()){
-			if(
-				it.thing.bshootable
-			){
-				zit=it.thing;
-				A_Face(zit,0,0,flags:FAF_MIDDLE);
-				if(
-					zit.health>0
-					&&checksight(it.thing)
-					&&(
-						!tb
-						||zit==tb.target
-						||!(zit is "bogus_astralcacodemon")
-					)
-				){
-					zit.damagemobj(self,tb,random(0,7),"Electro");
+
+		Actor tb = target;
+		Actor zit = null;
+
+		BlockThingsIterator it = BlockThingsIterator.create(self, 72);
+		while (it.next()) {
+			if (it.thing.bSHOOTABLE) {
+				zit = it.thing;
+
+				A_Face(zit, 0, 0, flags: FAF_MIDDLE);
+
+				if (
+					zit.health > 0
+					&& checkSight(it.thing)
+					&& (!tb || zit == tb.target || !(zit is 'Bogus_AstralCacodemon'))
+				) {
+					zit.damagemobj(self, tb, random(0, 7), "Electro");
 				}
+
 				break;
 			}
 		}
-		if(!zit||zit==tb){pitch=frandom(-90,90);angle=frandom(0,360);}
+
+		if (!zit || zit == tb) {
+			pitch = frandom(-90, 90);
+			angle = frandom(0,360);
+		}
+
 		A_CustomRailgun(
-			(0),0,"","e0 df ff",
+			0, 0,
+			"", "e0 df ff",
 			RGF_SILENT|RGF_NOPIERCING|RGF_FULLBRIGHT|RGF_CENTERZ|RGF_NORANDOMPUFFZ,
-			0,4000,"FoofPuff",range:128,6,0.8,1.5
+			0, 4000,
+			"FoofPuff",
+			range: 128,
+			6, 0.8, 1.5
 		);
 		A_FaceTracer(4,4);
-		if(pos.z-floorz<24)vel.z+=0.3;
+		if (pos.z-floorz<24)vel.z+=0.3;
 	}
-	states{
-	spawn:
-		BAL2 A 0 ZapSomething();
-		BAL2 AB 2 light("PLAZMABX1") A_Corkscrew();
-		loop;
-	death:
-		BAL2 C 0 A_SprayDecal("CacoScorch",radius*2);
-		BAL2 C 0 A_StartSound("misc/fwoosh", CHAN_AUTO);
-		BAL2 CCCDDDEEE 1 light("BAKAPOST1") ZapSomething();
-	death2:
-		BAL2 E 0 ZapSomething();
-		BAL2 E 3 light("PLAZMABX2") A_FadeOut(0.3);
-		loop;
+
+	states {
+		spawn:
+			BAL2 A 0 ZapSomething();
+			#### AB 2 light("PLAZMABX1") A_Corkscrew();
+			loop;
+		death:
+			#### C 0 A_SprayDecal("CacoScorch", radius * 2);
+			#### C 0 A_StartSound("misc/fwoosh", CHAN_AUTO);
+			#### CCCDDDEEE 1 light("BAKAPOST1") ZapSomething();
+		death2:
+			#### E 0 ZapSomething();
+			#### E 3 light("PLAZMABX2") A_FadeOut(0.3);
+			loop;
 	}
 }
