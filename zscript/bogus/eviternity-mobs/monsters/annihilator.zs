@@ -18,6 +18,7 @@ class Bogus_Annihilator : PainMonster
 		radius 17;
 		mass 2000;
 		speed 12;
+		+E1M8BOSS
 		+bossdeath
 		+nobouncesound
 		+hdmobbase.smallhead
