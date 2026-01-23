@@ -247,6 +247,7 @@ class Bogus_FormerCaptain : VulcanetteZombie {
 			#### KL 5;
 			#### M 5;
 		dead:
+		death.spawndead:
 			#### M 3;
 			#### N 5 canraise A_JumpIf(abs(vel.z) > 1, "dead");
 			wait;
@@ -279,4 +280,12 @@ class Bogus_FormerCaptain : VulcanetteZombie {
 			#### POH 5;
 			goto pain;
 	}
+}
+
+class DeadFormerCaptain : Bogus_FormerCaptain {
+    override void postBeginPlay() {
+        super.postBeginPlay();
+
+        A_Die("spawndead");
+    }
 }

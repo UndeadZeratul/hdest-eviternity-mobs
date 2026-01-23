@@ -255,6 +255,7 @@ class Bogus_FormerCorporal : ZombieStormtrooper {
             #### I 5 A_Vocalize(deathsound);
             #### JK 5;
         dead:
+        death.spawndead:
             #### K 3 A_JumpIf(abs(vel.z) < 2.0, 1);
             #### L 5 canraise A_JumpIf(abs(vel.z) >= 2.0, "dead");
             wait;
@@ -285,5 +286,13 @@ class Bogus_FormerCorporal : ZombieStormtrooper {
             #### SRQ 6;
             #### PONM 4;
             goto pain;
+    }
+}
+
+class DeadFormerCorporal : Bogus_FormerCorporal {
+    override void postBeginPlay() {
+        super.postBeginPlay();
+
+        A_Die("spawndead");
     }
 }

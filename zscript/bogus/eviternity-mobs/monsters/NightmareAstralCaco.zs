@@ -754,3 +754,11 @@ class NightmareAstralJuice : AstralJuice {
 			stop;
 	}
 }
+
+class DeadNightmareCacodemon : Bogus_NightmareCacodemon {
+    override void postBeginPlay() {
+        super.postBeginPlay();
+
+        A_Die("spawndead");
+    }
+}

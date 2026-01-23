@@ -316,3 +316,11 @@ class AstralNormalBall : HDFireball {
 			loop;
 	}
 }
+
+class DeadAstralCacodemon : Bogus_AstralCacodemon {
+    override void postBeginPlay() {
+        super.postBeginPlay();
+
+        A_Die("spawndead");
+    }
+}

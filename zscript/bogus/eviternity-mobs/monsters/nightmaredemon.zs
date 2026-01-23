@@ -493,3 +493,11 @@ class Bogus_NightmareDemonBlurShort : Bogus_NightmareDemonBlur
 			loop;
 	}
 }
+
+class DeadNightmareDemon : Bogus_NightmareDemon {
+    override void postBeginPlay() {
+        super.postBeginPlay();
+
+        A_Die("spawndead");
+    }
+}
