@@ -3,11 +3,13 @@
 TAG_ANNIHILATOR                              = "Annihilator";
 TAG_ASTRALCACO                               = "Astral Cacodemon";
 TAG_FORMERCAPTAIN                            = "Former Captain";
+TAG_NIGHTMARECACO                            = "Nightmare Cacodemon";
 TAG_NIGHTMAREDEMON                           = "Nightmare Demon";
 
 OB_ANNIHILATOR                               = "%o's hearts and minds are now splattered all over the wall.";
 OB_ASTRALCACO                                = "%o now rests amongst the stars.";
 OB_FORMERCAPTAIN                             = "";
+OB_NIGHTMARECACO                             = "%o's liebens were devoured.";
 OB_NIGHTMAREDEMON                            = "%o's liebens were devoured.";
 
 OB_HIT_ASTRALCACO                            = "%o now rests inside the stars.";
