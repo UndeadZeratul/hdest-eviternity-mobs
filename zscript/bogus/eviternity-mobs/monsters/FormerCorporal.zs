@@ -107,7 +107,7 @@ class Bogus_FormerCorporal : ZombieStormtrooper {
 
         aiming:
             #### E 3 A_FaceLastTargetPos(30);
-            #### E 1 A_StartAim(maxspread: 20, maxtics: random(0, 35));
+            #### E 1 A_StartAim(conesize: 20, maxtics: random(0, 35));
             #### E 0 A_JumpIf(
                 HDMobAI.TryShoot(self, 32, 512, 0, 0, flags: HDMobAI.TS_GEOMETRYOK) || random(0, 2),
                 "shoot"
@@ -116,10 +116,7 @@ class Bogus_FormerCorporal : ZombieStormtrooper {
 
         shoot:
             #### E 0 A_JumpIf(jammed, "jammed");
-            #### E 0 {
-                pitch += frandom(-spread, spread);
-                angle += frandom(-spread, spread);
-            }
+            #### E 0 A_MonsterMuzzleClimb(frandom(-0.1,0.2),frandom(-0.1,0.2));
         fire:
             #### F 0 A_JumpIf(mag < 1, "ohforfuckssake");
             #### F 1 bright light("SHOT") {
@@ -131,9 +128,7 @@ class Bogus_FormerCorporal : ZombieStormtrooper {
                         A_StartSound("weapons/rifleclick", 5);
                         setstatelabel("jammed");
                     }
-
-                    pitch += frandom(-spread, spread * 0.5) * 0.3;
-                    angle += frandom(-spread * 0.5, spread) * 0.3;
+                    A_MonsterMuzzleClimb(frandom(-0.1,0.2),frandom(-0.1,0.2));
 
                 mag--;
             }
@@ -146,8 +141,6 @@ class Bogus_FormerCorporal : ZombieStormtrooper {
                     return;
                 }
 
-                spread = max(0, spread - 1);
-
                 A_SetTics(random(2, 6));
             }
             #### E 3;
@@ -159,11 +152,7 @@ class Bogus_FormerCorporal : ZombieStormtrooper {
             goto coverfire;
 
         coverfire:
-            #### E 1 {
-                spread = 2;
-                A_Coverfire();
-                A_SetTics(random(2,6));
-            }
+            #### E random(2,6) A_Coverfire();
             wait;
 
         frag:
@@ -217,22 +206,13 @@ class Bogus_FormerCorporal : ZombieStormtrooper {
         see2:
             #### A 0 A_JumpIf(!jammed && mag < 1, "reload");
             #### ABCD 4 A_HDChase();
-            #### A 0 {
-                spread = 2;
-            }
             #### A 0 A_JumpIfTargetInLOS("see");
             #### A 0 A_Jump(24, "roam");
             loop;
 
         roam:
             #### E 3 A_Jump(60, "roam2");
-            #### E 0 {
-                spread = 1;
-            }
             #### E 4 A_Watch();
-            #### E 0 {
-                spread = 0;
-            }
             #### EEE 4 A_Watch();
             #### A 0 A_Jump(60, "roam");
         roam2:
