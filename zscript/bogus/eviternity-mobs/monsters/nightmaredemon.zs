@@ -361,7 +361,7 @@ class Bogus_NightmareDemon : NinjaPirate {
 			#### E 0 {
 				if (!angery) angery = true;
 
-				cloaked = false;
+				Cloak(false);
 			}
 			#### EE 2 A_FaceTarget(30);
 			#### E 6;
