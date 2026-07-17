@@ -255,7 +255,7 @@ class Bogus_NightmareDemon : NinjaPirate {
 
 				if (
 					target
-					&& distance3D(target) < 50
+					&& distance3DSquared(target) < 2500 // 50 ** 2
 					&& checkMove(0.5 * (pos.xy + target.pos.xy), PCM_NOACTORS)
 					&& random(0, 3)
 				) {
@@ -290,7 +290,7 @@ class Bogus_NightmareDemon : NinjaPirate {
 				if (
 					!target
 					|| target.health < 1
-					|| distance3D(target) > 50
+					|| distance3DSquared(target) > 2500 // 50 ** 2
 				) {
 					setStateLabel("meleeend");
 					return;
