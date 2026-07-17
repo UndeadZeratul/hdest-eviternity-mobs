@@ -498,6 +498,15 @@ class DeadNightmareDemon : Bogus_NightmareDemon {
     override void postBeginPlay() {
         super.postBeginPlay();
 
-        A_Die("spawndead");
-    }
+		A_Die("spawndead");
+	}
+
+	states {
+		death:spawndead:
+			---- A 0 {
+				A_NoBlocking();
+				A_SetTranslucent(1, 0);
+			}
+			goto super::dead;
+	}
 }
